@@ -90,7 +90,7 @@ The project is intentionally static. HTML pages provide the user interface, Java
 The repository contains three GoldHEN choices where supported:
 
 - **GoldHEN v2.4b18.10** — the latest build exposed by the selectors.
-- **GoldHEN v2.4b18.9** — the previous build that supports also the latest jailbbreakable firmwares
+- **GoldHEN v2.4b18.9** — the previous build that supports also the latest jailbreakable firmwares
 - **GoldHEN v2.4b18.5** — the stable/previous build for users who prefer the older version.
 
 The 7.00–8.52 and 9.00–9.60 branches select a GoldHEN build through their version selector and cache page. The CSSFontFace branch uses [`css/version-selector.html`](./css/version-selector.html), which routes to:
