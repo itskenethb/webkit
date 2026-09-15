@@ -1,4 +1,4 @@
-# PlayStation Pulse
+# PlayStation Exploit Collection
 
 <p align="center">
   <strong>Offline-first PS4 host hub with firmware-specific exploit flows and GoldHEN integration.</strong>
@@ -6,15 +6,15 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/platform-PlayStation%204-111827?style=for-the-badge&logo=playstation&logoColor=white" alt="Platform: PlayStation 4">
-  <img src="https://img.shields.io/badge/firmware-5.05--11.02-16a34a?style=for-the-badge" alt="Firmware range: 5.05 to 11.02">
+  <img src="https://img.shields.io/badge/firmware-5.05--11.02-16a34a?style=for-the-badge" alt="Firmware range: 5.05 to 13.00">
   <img src="https://img.shields.io/badge/mode-offline--first-0f766e?style=for-the-badge" alt="Offline-first">
   <img src="https://img.shields.io/badge/interface-terminal--style-334155?style=for-the-badge" alt="Terminal-style interface">
 </p>
 
 <!-- Replace the placeholder below with the raw GitHub URL of assets/showcase.webp after uploading the repository. -->
-![PlayStation Pulse Host Selector](https://raw.githubusercontent.com/sudoBlackArch/sudoblackarch.github.io/main/assets/showcase.webp)
+![PlayStation Exploit Host Selector](https://raw.githubusercontent.com/sudoBlackArch/sudoblackarch.github.io/main/assets/showcase.webp)
 
-PlayStation Pulse is a self-contained collection of static PS4 host pages. It provides one entry point for choosing a console firmware, then routes to the corresponding exploit and GoldHEN flow. The project is designed for local hosting, offline caching, and use in the PS4 browser.
+PlayStation Webkit is a self-contained collection of static PS4 host pages. It provides one entry point for choosing a console firmware, then routes to the corresponding exploit and GoldHEN flow. The project is designed for local hosting, offline caching, and use in the PS4 browser.
 
 > This project is intended for educational, preservation, and research purposes. Use it at your own risk. It is not affiliated with or endorsed by Sony Interactive Entertainment.
 
@@ -41,7 +41,8 @@ PlayStation Pulse is a self-contained collection of static PS4 host pages. It pr
 - Dedicated offline host pages for PS4 firmware 5.05 and 6.72.
 - PSFree/Lapse host flows for firmware 7.00–8.52 and 9.00–9.60.
 - A CSSFontFace UAF host flow for firmware 6.00–11.02.
-- GoldHEN v2.4b18.10 and v2.4b18.5 selection where the host supports both builds.
+- A Slopkit port host for firmware 11.00-13.00.
+- GoldHEN v2.4b18.10, v2.4b18.9 and v2.4b18.5 selection where the host supports both builds.
 - AppCache-based offline operation with firmware-specific cache and manifest files.
 - Firmware-specific payload utilities on the host branches that provide them.
 - A consistent terminal, cyberpunk, and retro-computing visual system across selectors, cache pages, and exploit pages.
@@ -55,7 +56,9 @@ PlayStation Pulse is a self-contained collection of static PS4 host pages. It pr
 | **6.72** | `672/index.html` | Dedicated firmware-specific host | Directly on the host page | Included |
 | **7.00–8.52** | `700/version-selector.html` | PSFree + Lapse host flow | Version selector, then offline cache page | Included |
 | **9.00–9.60** | `900/version-selector.html` | PSFree + Lapse host flow | Version selector, then offline cache page | Included |
-| **6.00–11.02** | `css/version-selector.html` | CSSFontFace UAF + Lapse/NetCtrl | Version selector, then `stable` or `latest` host | No separate utility-payload menu |
+| **6.00–11.02** | `css/version-selector.html` | CSSFontFace UAF + Lapse/Poops | Version selector, then `stable` or `latest` host | No separate utility-payload menu |
+| **11.00–13.00** | `slopkit/version-selector.html` | Slopkit UAF + Lapse/Poops | Version selector, then `stable` or `previous` host | No separate utility-payload menu |
+
 
 The root selector stores the selected firmware locally and routes to the correct branch. Always use the host intended for the exact firmware installed on the console.
 
@@ -84,9 +87,10 @@ The project is intentionally static. HTML pages provide the user interface, Java
 
 ## GoldHEN versions
 
-The repository contains two GoldHEN choices where supported:
+The repository contains three GoldHEN choices where supported:
 
 - **GoldHEN v2.4b18.10** — the latest build exposed by the selectors.
+- **GoldHEN v2.4b18.9** — the previous build that supports also the latest jailbbreakable firmwares
 - **GoldHEN v2.4b18.5** — the stable/previous build for users who prefer the older version.
 
 The 7.00–8.52 and 9.00–9.60 branches select a GoldHEN build through their version selector and cache page. The CSSFontFace branch uses [`css/version-selector.html`](./css/version-selector.html), which routes to:
@@ -122,11 +126,20 @@ The exact list differs between 5.05, 6.72, 7.00–8.52, and 9.00–9.60. Payload
 The CSSFontFace branch deliberately excludes the standalone utility-payload menu used by the other host branches. The CSSFontFace exploit flow is memory-intensive by nature, so removing additional payload tools helps preserve the memory headroom needed for a more stable exploit and GoldHEN launch. Its interface is focused on:
 
 - exploit output;
-- Lapse or NetCtrl chain selection;
+- Lapse or Poops chain selection;
 - Auto Jailbreak countdown and manual `Jailbreak` activation;
 - automatic loading of the selected GoldHEN build.
 
 The CSSFontFace implementation still contains the internal binary stage required to complete its selected exploit/GoldHEN flow. That internal stage is not a user-selectable utility payload and is not equivalent to the optional utility-payload set excluded from this host.
+
+### Slopkit host scope
+
+The Slopkit branch deliberately excludes the standalone utility-payload menu used by the other host branches. The Slopkit exploit flow is memory-intensive by nature, so removing additional payload tools helps preserve the memory headroom needed for a more stable exploit and GoldHEN launch. Its interface is focused on:
+
+- exploit output;
+- Lapse or Poops chain selection;
+- Auto Jailbreak countdown and manual `Jailbreak` activation;
+- automatic loading of the selected GoldHEN build.
 
 ## Offline caching
 
@@ -139,6 +152,7 @@ All host branches use relative assets and browser application caching. Cache fil
 | **7.00–8.52** | Select a build in `700/version-selector.html`, then use `cache.html` or `cache5.html` to install `PSPulse.cache` or `PSPulse5.cache`. |
 | **9.00–9.60** | Select a build in `900/version-selector.html`, then use `cache.html` or `cache5.html` to install `PSPulse.manifest` or `PSPulse5.manifest`. |
 | **CSSFontFace** | Select a build in `css/version-selector.html`; the chosen `stable` or `latest` page uses its own `cache.manifest`. |
+| **Slopkit** | Select a build in `slopkit/version-selector.html`; the chosen `stable` or `previous` page uses its own `cache.manifest`. |
 
 After the first successful cache installation, close and reopen the PS4 browser when the page instructs you to do so. If a page still serves an older layout or script, clear the host's browser data and repeat the cache installation.
 
@@ -178,7 +192,7 @@ The 7.00–8.52 and 9.00–9.60 branches keep separate `latest` and `stable` ass
 
 ### CSSFontFace branch
 
-The CSSFontFace implementation includes the CSSFontFace UAF userland path, shared memory/read-write/ROP helpers, Lapse and NetCtrl exploit chains, PS4 kernel support, firmware-specific kernel patches, and a terminal-style status logger. The `stable` and `latest` directories are intentionally parallel so they can be cached and served independently.
+The CSSFontFace implementation includes the CSSFontFace UAF userland path, shared memory/read-write/ROP helpers, Lapse and Poops exploit chains, PS4 kernel support, firmware-specific kernel patches, and a terminal-style status logger. The `stable` and `latest` directories are intentionally parallel so they can be cached and served independently.
 
 The CSS control panel is kept small and predictable for the PS4 browser: exploit output, chain selection, Jailbreak, and Auto Jailbreak. The radio-chain focus styling uses the broadly supported `:focus` selector so controller navigation remains visibly highlighted on the older PS4 browser engine.
 
@@ -217,19 +231,8 @@ Wait until the host reports that the exploit/GoldHEN flow is ready. Confirm that
 - Do not assume that a payload is harmless simply because it is bundled locally; review what each utility does before loading it.
 - The CSSFontFace flow is especially sensitive to available browser memory; excluding optional utility payloads is an intentional stability trade-off.
 - No host can guarantee identical results on every console, browser build, cache state, or network configuration.
-
-## Credits and attribution
-
-**Author:** [BlackArch](https://t.me/sudoBlackArch)<br>
-**Community:** [PlayStation Pulse](https://t.me/PlayStation_Pulse)<br>
-**Premium Game Servers:** [NodePlay](https://nodeplay.net/)
-
-The repository contains firmware-specific exploit components, support modules, and preserved upstream notices. Please retain the original notices and attribution included with those components.
-
-> For any use of the materials or files, the links to the author [BlackArch](https://t.me/sudoBlackArch) and the [PlayStation Pulse](https://t.me/PlayStation_Pulse) Telegram group must remain on all pages.
-
 ---
 
 <p align="center">
-  <sub>PlayStation Pulse · Offline PS4 Host Collection</sub>
+  <sub>PlayStation Webkit · Offline PS4 Host Collection</sub>
 </p>
