@@ -633,6 +633,7 @@
         @media (max-width: 600px) {
             .fw-selector-list.open {
                 grid-template-columns: 1fr;
+                overflow-y: auto;
             }
 
             .fw-option {
@@ -898,6 +899,37 @@
 
         .fw-selector-list.open {
             animation: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.35rem;
+
+            /* The height is calculated by JavaScript from the actual
+               space available below the selector. This means the list
+               only scrolls when it really cannot fit on screen. */
+            max-height: none;
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+        }
+
+        /* Scrollbar styling */
+        .fw-selector-list.open::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .fw-selector-list.open::-webkit-scrollbar-track {
+            background: var(--terminal-bg);
+        }
+
+        .fw-selector-list.open::-webkit-scrollbar-thumb {
+            background: var(--terminal-line-bright);
+            border-radius: 0;
+        }
+
+        .fw-selector-list.open::-webkit-scrollbar-thumb:hover {
+            background: var(--terminal-green-soft);
         }
 
         .fw-option {
@@ -1340,12 +1372,31 @@
 
         if (currentFocus < 0) currentFocus = 0;
 
+        function updateDropdownHeight() {
+            if (!isOpen) return;
+
+            var rect = selectorBtn.getBoundingClientRect();
+            var gap = 8;
+            var bottomPadding = 12;
+            var availableHeight = window.innerHeight - rect.bottom - gap - bottomPadding;
+
+            /* Never allow a negative/zero height. */
+            availableHeight = Math.max(120, Math.floor(availableHeight));
+
+            selectorList.style.maxHeight = availableHeight + 'px';
+        }
+
         function openList() {
             isOpen = true;
             selectorList.classList.add('open');
             selectorBtn.classList.add('open');
             selectorBtn.setAttribute('aria-expanded', 'true');
             document.querySelector('.container').style.zIndex = '30';
+
+            /* Calculate the real space available below the button.
+               The scrollbar appears only if the options exceed that space. */
+            updateDropdownHeight();
+
             options[currentFocus].focus();
         }
 
@@ -1412,6 +1463,14 @@
             }
         });
 
+        window.addEventListener('resize', function () {
+            updateDropdownHeight();
+        });
+
+        window.addEventListener('orientationchange', function () {
+            setTimeout(updateDropdownHeight, 50);
+        });
+
         document.addEventListener('click', function (event) {
             if (isOpen && !selectorBtn.contains(event.target) && !selectorList.contains(event.target)) {
                 closeList(false);
@@ -1419,5 +1478,4 @@
         });
     </script>
 </body>
-
 </html>
