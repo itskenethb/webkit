@@ -1,5 +1,5 @@
 <p align="center">
-# PlayStation Exploit Collection
+<strong>PlayStation Exploit Collection</strong>
 /p>
 
 <p align="center">
