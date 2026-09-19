@@ -750,7 +750,7 @@
         .header-section {
             background: rgba(8, 12, 10, 0.92);
             border: 1px solid var(--terminal-line);
-            margin-bottom: 14px;
+            margin-bottom: 10px;
             padding: 20px 28px 24px;
             position: relative;
             text-align: left;
@@ -814,6 +814,7 @@
             border: 1px solid var(--terminal-line);
             max-width: none;
             padding: 18px 22px 16px;
+            margin-bottom: 10rem;
             width: 100%;
         }
 
@@ -901,13 +902,9 @@
             animation: none;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 0.35rem;
-
-            /* The height is calculated by JavaScript from the actual
-               space available below the selector. This means the list
-               only scrolls when it really cannot fit on screen. */
+            gap: 0.2rem;
             max-height: none;
-            overflow-y: auto;
+            overflow-y: visible;
             overflow-x: hidden;
 
             -webkit-overflow-scrolling: touch;
