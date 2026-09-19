@@ -1,4 +1,6 @@
+<p align="center">
 # PlayStation Exploit Collection
+/p>
 
 <p align="center">
   <strong>Offline-first PS4 host hub with firmware-specific exploit flows and GoldHEN integration.</strong>
