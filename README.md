@@ -234,7 +234,7 @@ Wait until the host reports that the exploit/GoldHEN flow is ready. Confirm that
 ## Safety and limitations
 
 - Use only the host intended for the console's exact firmware.
-- Do not interrupt the console while an exploit, GoldHEN load, payload, or system operation is running.
+- Do not interrupt the console while an exploit, GoldHEN or HEN load, payload, or system operation is running.
 - Keep a safe recovery path and current backups before using backup, restore, or system-related utilities.
 - Do not use exploit pages for PSN access or other online services.
 - Do not assume that a payload is harmless simply because it is bundled locally; review what each utility does before loading it.
