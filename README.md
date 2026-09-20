@@ -201,7 +201,7 @@ The CSS control panel is kept small and predictable for the PS4 browser: exploit
 
 ### Slopkit branch
 
-The Slopkit implementation includes the Slopkit UAF userland path, shared memory/read-write/ROP helpers, Lapse and Poops exploit chains, PS4 kernel support, firmware-specific kernel patches, and a terminal-style status logger. The `stable` and `previous` and `Variation 1` and `Varation 2` directories are intentionally parallel so they can be cached and served independently.
+The Slopkit implementation includes the Slopkit UAF userland path, shared memory/read-write/ROP helpers, Poops exploit chains, PS4 kernel support, firmware-specific kernel patches, and a terminal-style status logger. The `stable` and `previous` and `Variation 1` and `Varation 2` directories are intentionally parallel so they can be cached and served independently.
 
 The CSS control panel is kept small and predictable for the PS4 browser: exploit output, chain selection, Jailbreak, and Auto Jailbreak. The radio-chain focus styling uses the broadly supported `:focus` selector so controller navigation remains visibly highlighted on the older PS4 browser engine.
 
@@ -221,7 +221,7 @@ Make sure the repository is served over HTTP/HTTPS, the manifest has the correct
 
 ### The exploit does not complete
 
-Verify the console firmware and selected branch, close unrelated browser tabs, and retry from a clean browser state. On the CSSFontFace page, try disabling Auto Jailbreak and start the flow manually with `Jailbreak`. Exploit reliability can vary with browser memory, cached state, and console conditions.
+Verify the console firmware and selected branch, close unrelated browser tabs, and retry from a clean browser state. On the CSSFontFace and Slopkit page, try disabling Auto Jailbreak and start the flow manually with `Jailbreak`. Exploit reliability can vary with browser memory, cached state, and console conditions.
 
 ### The PS4 browser freezes
 
@@ -229,7 +229,7 @@ JavaScript cannot reliably recover a browser process that has stopped responding
 
 ### A utility payload does not respond
 
-Wait until the host reports that the exploit/GoldHEN flow is ready. Confirm that the selected host actually provides the requested utility, that the PS4 and payload receiver are on the expected network, and that the receiver is listening on the required port. The CSSFontFace branch does not provide standalone utility-payload buttons.
+Wait until the host reports that the exploit/GoldHEN flow is ready. Confirm that the selected host actually provides the requested utility, that the PS4 and payload receiver are on the expected network, and that the receiver is listening on the required port. The CSSFontFace and Slopkit branch does not provide standalone utility-payload buttons.
 
 ## Safety and limitations
 
@@ -238,7 +238,7 @@ Wait until the host reports that the exploit/GoldHEN flow is ready. Confirm that
 - Keep a safe recovery path and current backups before using backup, restore, or system-related utilities.
 - Do not use exploit pages for PSN access or other online services.
 - Do not assume that a payload is harmless simply because it is bundled locally; review what each utility does before loading it.
-- The CSSFontFace flow is especially sensitive to available browser memory; excluding optional utility payloads is an intentional stability trade-off.
+- The CSSFontFace and Slopkit flow is especially sensitive to available browser memory; excluding optional utility payloads is an intentional stability trade-off.
 - No host can guarantee identical results on every console, browser build, cache state, or network configuration.
 ---
 
