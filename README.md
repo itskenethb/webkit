@@ -8,7 +8,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/platform-PlayStation%204-111827?style=for-the-badge&logo=playstation&logoColor=white" alt="Platform: PlayStation 4">
-  <img src="https://img.shields.io/badge/firmware-5.05--13.00-16a34a?style=for-the-badge" alt="Firmware range: 5.05 to 13.00">
+  <img src="https://img.shields.io/badge/firmware-5.05--13.00-16a34a?style=for-the-badge" alt="Firmware range: 5.05 to 13.52">
   <img src="https://img.shields.io/badge/mode-offline--first-0f766e?style=for-the-badge" alt="Offline-first">
   <img src="https://img.shields.io/badge/interface-terminal--style-334155?style=for-the-badge" alt="Terminal-style interface">
 </p>
@@ -60,6 +60,7 @@ PlayStation Webkit is a self-contained collection of static PS4 host pages. It p
 | **9.00–9.60** | `900/version-selector.html` | PSFree + Lapse host flow | Version selector, then offline cache page | Included |
 | **6.00–11.02** | `css/version-selector.html` | CSSFontFace UAF + Lapse/Poops | Version selector, then `stable` or `latest` host | No separate utility-payload menu |
 | **11.00–13.00** | `slopkit/version-selector.html` | Slopkit UAF + Lapse/Poops | Version selector, then `stable` or `previous` host | No separate utility-payload menu |
+| **13.02–13.52** | `uaf/version-selector.html` | Slopkit UAF + Poops | Version selector, then `Variation 1` or `Variation 2 (Coming Soon)` host | No separate utility-payload menu |
 
 
 The root selector stores the selected firmware locally and routes to the correct branch. Always use the host intended for the exact firmware installed on the console.
@@ -90,7 +91,7 @@ The project is intentionally static. HTML pages provide the user interface, Java
 ## GoldHEN versions
 
 The repository contains three GoldHEN choices where supported:
-
+- **HEN v2.2.0 Beta** — the minimal and open source hombrew enabler used to test the jailbreak in the latest firmwares.
 - **GoldHEN v2.4b18.10** — the latest build exposed by the selectors.
 - **GoldHEN v2.4b18.9** — the previous build that supports also the latest jailbreakable firmwares
 - **GoldHEN v2.4b18.5** — the stable/previous build for users who prefer the older version.
@@ -154,7 +155,7 @@ All host branches use relative assets and browser application caching. Cache fil
 | **7.00–8.52** | Select a build in `700/version-selector.html`, then use `cache.html` or `cache5.html` to install `PSPulse.cache` or `PSPulse5.cache`. |
 | **9.00–9.60** | Select a build in `900/version-selector.html`, then use `cache.html` or `cache5.html` to install `PSPulse.manifest` or `PSPulse5.manifest`. |
 | **CSSFontFace** | Select a build in `css/version-selector.html`; the chosen `stable` or `latest` page uses its own `cache.manifest`. |
-| **Slopkit** | Select a build in `slopkit/version-selector.html`; the chosen `stable` or `previous` page uses its own `cache.manifest`. |
+| **Slopkit** | Select a build in `slopkit/version-selector.html`; or `uaf/version-selector.html`; the chosen `variation 1` or `variation 2` page uses its own `cache.manifest`. |
 
 After the first successful cache installation, close and reopen the PS4 browser when the page instructs you to do so. If a page still serves an older layout or script, clear the host's browser data and repeat the cache installation.
 
@@ -195,6 +196,12 @@ The 7.00–8.52 and 9.00–9.60 branches keep separate `latest` and `stable` ass
 ### CSSFontFace branch
 
 The CSSFontFace implementation includes the CSSFontFace UAF userland path, shared memory/read-write/ROP helpers, Lapse and Poops exploit chains, PS4 kernel support, firmware-specific kernel patches, and a terminal-style status logger. The `stable` and `latest` directories are intentionally parallel so they can be cached and served independently.
+
+The CSS control panel is kept small and predictable for the PS4 browser: exploit output, chain selection, Jailbreak, and Auto Jailbreak. The radio-chain focus styling uses the broadly supported `:focus` selector so controller navigation remains visibly highlighted on the older PS4 browser engine.
+
+### Slopkit branch
+
+The Slopkit implementation includes the Slopkit UAF userland path, shared memory/read-write/ROP helpers, Lapse and Poops exploit chains, PS4 kernel support, firmware-specific kernel patches, and a terminal-style status logger. The `stable` and `previous` and `Variation 1` and `Varation 2` directories are intentionally parallel so they can be cached and served independently.
 
 The CSS control panel is kept small and predictable for the PS4 browser: exploit output, chain selection, Jailbreak, and Auto Jailbreak. The radio-chain focus styling uses the broadly supported `:focus` selector so controller navigation remains visibly highlighted on the older PS4 browser engine.
 
