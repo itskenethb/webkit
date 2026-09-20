@@ -167,7 +167,7 @@ The repository also includes small generator scripts for rebuilding cache files 
 1. Serve the repository root through an HTTP or HTTPS static server. The PS4 browser should not be expected to run the complete flow from an unsupported `file://` URL.
 2. Open the root [`index.html`](./index.html) in the PS4 browser.
 3. Select the exact firmware range matching the console.
-4. If the selected branch has a GoldHEN or HEN version selector, choose **Latest** or **Stable** and wait for the cache page to finish.
+4. If the selected branch has a GoldHEN or HEN version selector, choose **Latest** or **Stable** or **Previous** or **Variation 1** or **Variation 2** and wait for the cache page to finish.
 5. On the host page, wait for the ready/status message before starting the exploit.
 6. After GoldHEN or HEN has loaded, use only the tools shown by that host branch.
 
