@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <strong>Offline-first PS4 host hub with firmware-specific exploit flows and GoldHEN integration.</strong>
+  <strong>Offline-first PS4 host hub with firmware-specific exploit flows and GoldHEN and HEN integration.</strong>
 </p>
 
 <p align="center">
@@ -16,7 +16,7 @@
 <!-- Replace the placeholder below with the raw GitHub URL of assets/showcase.webp after uploading the repository. -->
 ![PlayStation Exploit Host Selector](https://github.com/itskenethb/webkit/blob/287c7761b1ab705c3c4cee1ffdbd58220f5da4ba/assets/showcase.webp)
 
-PlayStation Webkit is a self-contained collection of static PS4 host pages. It provides one entry point for choosing a console firmware, then routes to the corresponding exploit and GoldHEN flow. The project is designed for local hosting, offline caching, and use in the PS4 browser.
+PlayStation Webkit is a self-contained collection of static PS4 host pages. It provides one entry point for choosing a console firmware, then routes to the corresponding exploit and GoldHEN or HEN flow. The project is designed for local hosting, offline caching, and use in the PS4 browser.
 
 > This project is intended for educational, preservation, and research purposes. Use it at your own risk. It is not affiliated with or endorsed by Sony Interactive Entertainment.
 
@@ -45,6 +45,7 @@ PlayStation Webkit is a self-contained collection of static PS4 host pages. It p
 - A CSSFontFace UAF host flow for firmware 6.00–11.02.
 - A Slopkit port host for firmware 11.00-13.00.
 - GoldHEN v2.4b18.10, v2.4b18.9 and v2.4b18.5 selection where the host supports both builds.
+- HEN 2.2.0 Beta selection on the latest jailbreakable firmwares
 - AppCache-based offline operation with firmware-specific cache and manifest files.
 - Firmware-specific payload utilities on the host branches that provide them.
 - A consistent terminal, cyberpunk, and retro-computing visual system across selectors, cache pages, and exploit pages.
@@ -52,7 +53,7 @@ PlayStation Webkit is a self-contained collection of static PS4 host pages. It p
 
 ## Supported firmware flows
 
-| Firmware | Entry point | Exploit flow | GoldHEN selection | Utility payloads |
+| Firmware | Entry point | Exploit flow | GoldHEN or HEN selection | Utility payloads |
 |---|---|---|---|---|
 | **5.05** | `505/index.html` | Dedicated firmware-specific host | Directly on the host page | Included |
 | **6.72** | `672/index.html` | Dedicated firmware-specific host | Directly on the host page | Included |
@@ -86,11 +87,11 @@ flowchart LR
     K --> L[GoldHEN and host-specific tools]
 ```
 
-The project is intentionally static. HTML pages provide the user interface, JavaScript modules run the firmware-specific exploit chain, binary files provide GoldHEN/kernel-patch/payload assets, and AppCache files keep the selected flow available after the initial cache installation.
+The project is intentionally static. HTML pages provide the user interface, JavaScript modules run the firmware-specific exploit chain, binary files provide GoldHEN/HEN/kernel-patch/payload assets, and AppCache files keep the selected flow available after the initial cache installation.
 
 ## Homebrew Enablers versions
 
-The repository contains three GoldHEN choices where supported:
+The repository contains three GoldHEN or HEN choices where supported:
 - **HEN v2.2.0 Beta** — the open source homebrew enabler used to test the jailbreak in the latest firmwares.
 - **GoldHEN v2.4b18.10** — the latest build exposed by the selectors.
 - **GoldHEN v2.4b18.9** — the previous build that supports also the latest jailbreakable firmwares
@@ -126,23 +127,23 @@ The exact list differs between 5.05, 6.72, 7.00–8.52, and 9.00–9.60. Payload
 
 ### CSSFontFace host scope
 
-The CSSFontFace branch deliberately excludes the standalone utility-payload menu used by the other host branches. The CSSFontFace exploit flow is memory-intensive by nature, so removing additional payload tools helps preserve the memory headroom needed for a more stable exploit and GoldHEN or HEN launch. Its interface is focused on:
-
-- exploit output;
-- Lapse or Poops chain selection;
-- Auto Jailbreak countdown and manual `Jailbreak` activation;
-- automatic loading of the selected GoldHEN or HEN build.
-
-The CSSFontFace implementation still contains the internal binary stage required to complete its selected exploit/GoldHEN flow. That internal stage is not a user-selectable utility payload and is not equivalent to the optional utility-payload set excluded from this host.
-
-### Slopkit host scope
-
-The Slopkit branch deliberately excludes the standalone utility-payload menu used by the other host branches. The Slopkit exploit flow is memory-intensive by nature, so removing additional payload tools helps preserve the memory headroom needed for a more stable exploit and GoldHEN launch. Its interface is focused on:
+The CSSFontFace branch deliberately excludes the standalone utility-payload menu used by the other host branches. The CSSFontFace exploit flow is memory-intensive by nature, so removing additional payload tools helps preserve the memory headroom needed for a more stable exploit and GoldHEN launch. Its interface is focused on:
 
 - exploit output;
 - Lapse or Poops chain selection;
 - Auto Jailbreak countdown and manual `Jailbreak` activation;
 - automatic loading of the selected GoldHEN build.
+
+The CSSFontFace implementation still contains the internal binary stage required to complete its selected exploit/GoldHEN flow. That internal stage is not a user-selectable utility payload and is not equivalent to the optional utility-payload set excluded from this host.
+
+### Slopkit host scope
+
+The Slopkit branch deliberately excludes the standalone utility-payload menu used by the other host branches. The Slopkit exploit flow is memory-intensive by nature, so removing additional payload tools helps preserve the memory headroom needed for a more stable exploit and GoldHEN or HEN launch. Its interface is focused on:
+
+- exploit output;
+- Lapse or Poops chain selection;
+- Auto Jailbreak countdown and manual `Jailbreak` activation;
+- automatic loading of the selected GoldHEN or HEN build.
 
 ## Offline caching
 
@@ -166,9 +167,9 @@ The repository also includes small generator scripts for rebuilding cache files 
 1. Serve the repository root through an HTTP or HTTPS static server. The PS4 browser should not be expected to run the complete flow from an unsupported `file://` URL.
 2. Open the root [`index.html`](./index.html) in the PS4 browser.
 3. Select the exact firmware range matching the console.
-4. If the selected branch has a GoldHEN version selector, choose **Latest** or **Stable** and wait for the cache page to finish.
+4. If the selected branch has a GoldHEN or HEN version selector, choose **Latest** or **Stable** and wait for the cache page to finish.
 5. On the host page, wait for the ready/status message before starting the exploit.
-6. After GoldHEN has loaded, use only the tools shown by that host branch.
+6. After GoldHEN or HEN has loaded, use only the tools shown by that host branch.
 
 For the CSSFontFace host, **Auto Jailbreak** is enabled by default and starts a five-second countdown. During the countdown you can select `Lapse`, switch Auto Jailbreak off, or allow the default flow to continue. With Auto Jailbreak disabled, press `Jailbreak` manually when the page is ready.
 
@@ -229,7 +230,7 @@ JavaScript cannot reliably recover a browser process that has stopped responding
 
 ### A utility payload does not respond
 
-Wait until the host reports that the exploit/GoldHEN OR HEN flow is ready. Confirm that the selected host actually provides the requested utility, that the PS4 and payload receiver are on the expected network, and that the receiver is listening on the required port. The CSSFontFace and Slopkit branch does not provide standalone utility-payload buttons.
+Wait until the host reports that the exploit/GoldHEN or HEN flow is ready. Confirm that the selected host actually provides the requested utility, that the PS4 and payload receiver are on the expected network, and that the receiver is listening on the required port. The CSSFontFace and Slopkit branch does not provide standalone utility-payload buttons.
 
 ## Safety and limitations
 
