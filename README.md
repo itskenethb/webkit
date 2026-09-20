@@ -156,7 +156,7 @@ All host branches use relative assets and browser application caching. Cache fil
 | **7.00–8.52** | Select a build in `700/version-selector.html`, then use `cache.html` or `cache5.html` to install `PSPulse.cache` or `PSPulse5.cache`. |
 | **9.00–9.60** | Select a build in `900/version-selector.html`, then use `cache.html` or `cache5.html` to install `PSPulse.manifest` or `PSPulse5.manifest`. |
 | **CSSFontFace** | Select a build in `css/version-selector.html`; the chosen `stable` or `latest` page uses its own `cache.manifest`. |
-| **Slopkit** | Select a build in `slopkit/version-selector.html`; or `uaf/version-selector.html`; the chosen `variation 1` or `variation 2` page uses its own `cache.manifest`. |
+| **Slopkit** | Select a build in `slopkit/version-selector.html`; or `uaf/version-selector.html`; the choosen `latest` or `previous` and `variation 1` or `variation 2` page uses its own `cache.manifest`. |
 
 After the first successful cache installation, close and reopen the PS4 browser when the page instructs you to do so. If a page still serves an older layout or script, clear the host's browser data and repeat the cache installation.
 
