@@ -229,7 +229,7 @@ JavaScript cannot reliably recover a browser process that has stopped responding
 
 ### A utility payload does not respond
 
-Wait until the host reports that the exploit/GoldHEN flow is ready. Confirm that the selected host actually provides the requested utility, that the PS4 and payload receiver are on the expected network, and that the receiver is listening on the required port. The CSSFontFace and Slopkit branch does not provide standalone utility-payload buttons.
+Wait until the host reports that the exploit/GoldHEN OR HEN flow is ready. Confirm that the selected host actually provides the requested utility, that the PS4 and payload receiver are on the expected network, and that the receiver is listening on the required port. The CSSFontFace and Slopkit branch does not provide standalone utility-payload buttons.
 
 ## Safety and limitations
 
