@@ -88,7 +88,7 @@ flowchart LR
 
 The project is intentionally static. HTML pages provide the user interface, JavaScript modules run the firmware-specific exploit chain, binary files provide GoldHEN/kernel-patch/payload assets, and AppCache files keep the selected flow available after the initial cache installation.
 
-## GoldHEN versions
+## Homebrew Enablers versions
 
 The repository contains three GoldHEN choices where supported:
 - **HEN v2.2.0 Beta** — the minimal and open source homebrew enabler used to test the jailbreak in the latest firmwares.
