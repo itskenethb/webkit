@@ -60,7 +60,7 @@ PlayStation Webkit is a self-contained collection of static PS4 host pages. It p
 | **9.00–9.60** | `900/version-selector.html` | PSFree + Lapse host flow | Version selector, then offline cache page | Included |
 | **6.00–11.02** | `css/version-selector.html` | CSSFontFace UAF + Lapse/Poops | Version selector, then `stable` or `latest` host | No separate utility-payload menu |
 | **11.00–13.00** | `slopkit/version-selector.html` | Slopkit UAF + Lapse/Poops | Version selector, then `stable` or `previous` host | No separate utility-payload menu |
-| **13.02–13.52** | `uaf/version-selector.html` | Slopkit UAF + Poops | Version selector, then `Variation 1` or `Variation 2 (Coming Soon)` host | No separate utility-payload menu |
+| **13.02–13.52** | `uaf/version-selector.html` | Slopkit UAF + Poops | Version selector, then `variation 1` or `variation 2 (Coming Soon)` host | No separate utility-payload menu |
 
 
 The root selector stores the selected firmware locally and routes to the correct branch. Always use the host intended for the exact firmware installed on the console.
@@ -201,7 +201,7 @@ The CSS control panel is kept small and predictable for the PS4 browser: exploit
 
 ### Slopkit branch
 
-The Slopkit implementation includes the Slopkit UAF userland path, shared memory/read-write/ROP helpers, Poops exploit chains, PS4 kernel support, firmware-specific kernel patches, and a terminal-style status logger. The `stable` and `previous` and `Variation 1` and `Varation 2` directories are intentionally parallel so they can be cached and served independently.
+The Slopkit implementation includes the Slopkit UAF userland path, shared memory/read-write/ROP helpers, Poops exploit chain, PS4 kernel support, firmware-specific kernel patches, and a terminal-style status logger. The `stable` and `previous` and `variation 1` and `varation 2` directories are intentionally parallel so they can be cached and served independently.
 
 The CSS control panel is kept small and predictable for the PS4 browser: exploit output, chain selection, Jailbreak, and Auto Jailbreak. The radio-chain focus styling uses the broadly supported `:focus` selector so controller navigation remains visibly highlighted on the older PS4 browser engine.
 
