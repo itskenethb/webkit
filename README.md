@@ -126,12 +126,12 @@ The exact list differs between 5.05, 6.72, 7.00–8.52, and 9.00–9.60. Payload
 
 ### CSSFontFace host scope
 
-The CSSFontFace branch deliberately excludes the standalone utility-payload menu used by the other host branches. The CSSFontFace exploit flow is memory-intensive by nature, so removing additional payload tools helps preserve the memory headroom needed for a more stable exploit and GoldHEN launch. Its interface is focused on:
+The CSSFontFace branch deliberately excludes the standalone utility-payload menu used by the other host branches. The CSSFontFace exploit flow is memory-intensive by nature, so removing additional payload tools helps preserve the memory headroom needed for a more stable exploit and GoldHEN or HEN launch. Its interface is focused on:
 
 - exploit output;
 - Lapse or Poops chain selection;
 - Auto Jailbreak countdown and manual `Jailbreak` activation;
-- automatic loading of the selected GoldHEN build.
+- automatic loading of the selected GoldHEN or HEN build.
 
 The CSSFontFace implementation still contains the internal binary stage required to complete its selected exploit/GoldHEN flow. That internal stage is not a user-selectable utility payload and is not equivalent to the optional utility-payload set excluded from this host.
 
