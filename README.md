@@ -91,7 +91,7 @@ The project is intentionally static. HTML pages provide the user interface, Java
 ## GoldHEN versions
 
 The repository contains three GoldHEN choices where supported:
-- **HEN v2.2.0 Beta** — the minimal and open source hombrew enabler used to test the jailbreak in the latest firmwares.
+- **HEN v2.2.0 Beta** — the minimal and open source homebrew enabler used to test the jailbreak in the latest firmwares.
 - **GoldHEN v2.4b18.10** — the latest build exposed by the selectors.
 - **GoldHEN v2.4b18.9** — the previous build that supports also the latest jailbreakable firmwares
 - **GoldHEN v2.4b18.5** — the stable/previous build for users who prefer the older version.
