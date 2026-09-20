@@ -18,6 +18,15 @@
             height: 100%;
         }
 
+        #cache {
+            color: var(--dim);
+            display: block;
+            font-size: 12px;
+            margin-top: 5px;
+            min-height: 18px;
+            overflow-wrap: anywhere;
+        }
+
         body {
             background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 25%, #2d2d5f 50%, #1a1a3e 75%, #0f0f23 100%);
             background-attachment: fixed;
@@ -1243,8 +1252,9 @@
     <div class="container">
         <div class="header-section">
             <h1 class="main-title">Play Station 4 Jailbreak Selector</h1>
-            <p class="subtitle">Best Offline PS4 Hosts with actual GoldHEN</p>
+            <p class="subtitle">Best Offline PS4 Hosts with actual GoldHEN or HEN</p>
             <p class="description">Select your PlayStation 4 firmware version to get started</p>
+            <p id="cache">Checking offline cache...</p>
         </div>
 
         <div class="version-selection">
@@ -1258,6 +1268,15 @@
                 </button>
 
                <div id="fwSelectorList" class="fw-selector-list" role="listbox">
+
+    <!-- FW 13.02 - 13.52 -->
+     <div class="fw-option fw-css" data-fw="uaf" tabindex="0" role="option">
+        <div class="fw-option-info">
+            <div class="fw-option-title">FW 13.02–13.52</div>
+            <div class="fw-option-desc">Slopkit exploit port for Play Station 4 with automatic HEN or GoldHEN</div>
+        </div>
+        <div class="fw-option-version">Offline Slopkit</div>
+    </div>
 
     <!-- FW 11.00 - 13.00 -->
     <div class="fw-option fw-css" data-fw="slopkit" tabindex="0" role="option">
@@ -1345,8 +1364,12 @@
                 case 'css':
                     window.location.href = 'css/version-selector.html';
                     break;
-                case 'slopkit':
+                case 'slopkit': 
                     window.location.href = 'slopkit/version-selector.html';
+                    break;
+                case 'uaf':
+                    window.location.href = 'uaf/version-selector.html';
+                    break;
             }
         }
 
@@ -1473,6 +1496,70 @@
                 closeList(false);
             }
         });
+    </script>
+    
+    <script>
+    (function () {var cacheEl = document.getElementById("cache");
+        function setCache(text, ok) {
+            if (!cacheEl) return;
+            cacheEl.textContent = text;
+            cacheEl.className = ok ? "cacheok" : "";
+        }
+
+        var ac = window.applicationCache;
+
+        if (!ac || !document.documentElement.hasAttribute("manifest")) {
+            setCache("application cache unavailable");
+        } else if (!navigator.onLine) {
+            setCache("offline -- using cached resources", true);
+        } else if (ac.status === ac.IDLE) {
+            setCache("cached -- offline ready", true);
+        } else if (ac.status === ac.UPDATEREADY) {
+            try {
+                ac.swapCache();
+            } catch (e) {}
+            setCache("update downloaded -- offline ready", true);
+        } else {
+            setCache("checking cache...");
+
+            ac.addEventListener("downloading", function () {
+                setCache("caching for offline (first run)...");
+            }, false);
+
+            ac.addEventListener("progress", function (e) {
+                if (e && e.total) {
+                    setCache(
+                        "caching " +
+                        Math.round((e.loaded / e.total) * 100) +
+                        "%"
+                    );
+                }
+            }, false);
+
+            ac.addEventListener("cached", function () {
+                setCache("cached for offline use", true);
+            }, false);
+
+            ac.addEventListener("updateready", function () {
+                try {
+                    ac.swapCache();
+                } catch (e) {}
+                setCache("update downloaded -- offline ready", true);
+            }, false);
+
+            ac.addEventListener("noupdate", function () {
+                setCache("cached -- offline ready", true);
+            }, false);
+
+            ac.addEventListener("error", function () {
+                setCache("cache unavailable");
+            }, false);
+
+            ac.addEventListener("obsolete", function () {
+                setCache("cache obsolete");
+            }, false);
+        }
+    })();
     </script>
 </body>
 </html>

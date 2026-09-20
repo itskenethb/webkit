@@ -27,10 +27,6 @@
             padding: 0;
         }
 
-        html {
-            background: var(--bg);
-        }
-
         #cache {
             color: var(--dim);
             display: block;
@@ -38,6 +34,10 @@
             margin-top: 5px;
             min-height: 18px;
             overflow-wrap: anywhere;
+        }
+
+        html {
+            background: var(--bg);
         }
 
         body {
@@ -88,7 +88,7 @@
 
         .header-section::after {
             color: var(--dim);
-            content: "SYS / READY   //   FW 11.00–13.00";
+            content: "SYS / READY   //   FW 13.02–13.52";
             font-size: 13px;
             letter-spacing: 0.08em;
             position: absolute;
@@ -148,7 +148,7 @@
 
         .section-title::before {
             color: var(--dim);
-            content: "$ select --goldhen";
+            content: "$ select --homebrew enabler";
             font-size: 13px;
             letter-spacing: 0.04em;
             order: 1;
@@ -381,31 +381,22 @@
     <main class="container">
         <header class="header-section">
             <h1 class="main-title">Play Station 4 Slopkit</h1>
-            <p class="subtitle">Choose Your GoldHEN Version</p>
-            <p class="description">Select the GoldHEN version to cache and use. The Slopkit host supports PS4 firmwares ranging from 11.00–13.00.</p>
+            <p class="subtitle">Choose Your Homebrew Enabler</p>
+            <p class="description">Select the Homebrew Enabler to cache and use. The host supports PS4 firmwares ranging from 13.02–13.52.</p>
             <p id="cache">Checking offline cache...</p>
         </header>
 
         <section class="version-selection" aria-label="GoldHEN versions">
             <div class="section-title">Available Versions</div>
             <div class="version-grid">
-                <div class="version-card latest" onclick="selectVersion('v2.4b18.10')" tabindex="0"
+                <div class="version-card latest" onclick="selectVersion('2.2.0Beta')" tabindex="0"
                     data-version="latest">
                     <span class="card-index">01</span>
                     <div>
-                        <div class="version-badge latest">Latest</div>
-                        <div class="version-title">GoldHEN <span class="version-number">v2.4b18.10</span></div>
-                        <div class="version-description">Latest release with improved stability, new features, and better compatibility. Recommended for most users.</div>
-                    </div>
-                    <span class="card-action">[ SELECT ]</span>
-                </div>
-
-                <div class="version-card" onclick="selectVersion('v2.4b18.9')" tabindex="0" data-version="stable">
-                    <span class="card-index">02</span>
-                    <div>
-                        <div class="version-badge">Previous</div>
-                        <div class="version-title">GoldHEN <span class="version-number">v2.4b18.9</span></div>
-                        <div class="version-description">Previous release with proven reliability. Choose this if the latest version causes issues or you prefer maximum stability.</div>
+                        <div class="version-badge latest">Variation 1</div>
+                        <div class="version-description">[Minimal]</div>
+                        <div class="version-title">HEN<span class="version-number">2.2.0 Beta</span></div>
+                        <div class="version-description">Latest HEN in beta for initial release of latest exploit</div>
                     </div>
                     <span class="card-action">[ SELECT ]</span>
                 </div>
@@ -426,8 +417,8 @@
             localStorage.setItem('selectedGoldHENVersion', version);
 
             // Redirect to appropriate cache page based on version
-            if (version === 'v2.4b18.10') {
-                window.location.href = 'latest/index.html';
+            if (version === '2.2.0Beta') {
+                window.location.href = 'HEN/index.html';
             } else if (version === 'v2.4b18.9') {
                 window.location.href = 'previous/index.html';
             }

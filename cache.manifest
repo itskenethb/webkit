@@ -1,7 +1,6 @@
 CACHE MANIFEST
 
 CACHE:
-
 index.html
 pstation.png
 README.md
@@ -28,6 +27,7 @@ README.md
 672/app2usb.bin
 672/appcache-install.bin
 672/backup.bin
+672/binloader.js
 672/cache.manifest
 672/disable-updates.bin
 672/enable-updates.bin
@@ -59,10 +59,10 @@ README.md
 700/payloads.js
 700/psfree.mjs
 700/psfree5.mjs
-700/send.mjs
-700/version-selector.html
 700/PSPulse.cache
 700/PSPulse5.cache
+700/send.mjs
+700/version-selector.html
 
 700/kpatch/700.c
 700/kpatch/700.elf
@@ -170,11 +170,12 @@ README.md
 900/payloads/rif-renamer.bin
 900/payloads/WebRTE_900.bin
 
-900/rop/900.js
-900/rop/950.js
+900/rop/ps4/900.js
+900/rop/ps4/950.js
 
 assets/showcase.webp
 
+css/cache.manifest
 css/version-selector.html
 
 css/latest/appcache_manifest_generator.py
@@ -245,8 +246,8 @@ css/stable/src/ps4/patches/900.bin
 css/stable/src/ps4/patches/903.bin
 css/stable/src/ps4/patches/950.bin
 
+slopkit/cache.manifest
 slopkit/version-selector.html
-
 slopkit/latest/cache.manifest
 slopkit/latest/chain_lapse.js
 slopkit/latest/chain_poops.js
@@ -284,6 +285,22 @@ slopkit/previous/patches/1152.bin
 slopkit/previous/patches/1200.bin
 slopkit/previous/patches/1250.bin
 slopkit/previous/patches/1300.bin
+
+uaf/cache.manifest
+uaf/version-selector.html
+uaf/HEN/cache.manifest
+uaf/HEN/core.js
+uaf/HEN/index.html
+uaf/HEN/int64.js
+uaf/HEN/jb.html
+uaf/HEN/jb.js
+uaf/HEN/mem.js
+uaf/HEN/payload2.bin
+uaf/HEN/ps4_offsets.js
+uaf/HEN/rpc_worker.js
+uaf/HEN/patches/1302.bin
+uaf/HEN/patches/1350.bin
+uaf/HEN/patches/1352.bin
 
 NETWORK:
 *

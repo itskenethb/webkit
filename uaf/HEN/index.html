@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en" manifest="cache.manifest">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlayStation Slopkit Host</title>
+  <link rel="icon" type="image/png" href="/pstation.png">
+
+  <style>
+    :root {
+      --bg: #050706;
+      --panel: #080c0a;
+      --raised: #0d1510;
+      --line: #34443a;
+      --line-bright: #607b68;
+      --text: #f1f6f2;
+      --muted: #b4c1b8;
+      --dim: #86958b;
+      --green: #73f5a6;
+      --red: #ff9b9b;
+      --yellow: #e4d27b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      background: var(--bg);
+    }
+
+    html, body {
+      min-height: 100%;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image:
+        linear-gradient(rgba(115, 245, 166, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(115, 245, 166, 0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      font: 16px/1.5 "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      display: flex;
+      flex: 1 0 auto;
+      flex-direction: column;
+      justify-content: center;
+      margin: 0 auto;
+      padding: 24px 0 20px;
+      width: min(100% - 64px, 1120px);
+    }
+
+    .header-section,
+    .status-container,
+    .controls-section {
+      background: rgba(8, 12, 10, 0.92);
+      border: 1px solid var(--line);
+    }
+
+    .header-section {
+      margin-bottom: 12px;
+      padding: 20px 28px 22px;
+      position: relative;
+    }
+
+    .header-section::before {
+      color: var(--green);
+      content: "●  PS4 / Slopkit HOST";
+      display: block;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      margin-bottom: 16px;
+    }
+
+    .header-section::after {
+      color: var(--dim);
+      content: "SYS / READY   //   MANUAL MODE";
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      position: absolute;
+      right: 28px;
+      top: 21px;
+    }
+
+    .main-title {
+      color: var(--text);
+      font-size: clamp(30px, 5vw, 50px);
+      font-weight: 400;
+      letter-spacing: -0.07em;
+      line-height: 1.05;
+    }
+
+    .main-title::before {
+      color: var(--green);
+      content: "> ";
+    }
+
+    .subtitle {
+      color: var(--green);
+      font-size: 16px;
+      margin-top: 12px;
+    }
+
+    .version-info {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 7px;
+    }
+
+    #det {
+      color: var(--dim);
+      display: block;
+      font-size: 12px;
+      margin-top: 7px;
+      overflow-wrap: anywhere;
+    }
+
+    #cache {
+      color: var(--dim);
+      display: block;
+      font-size: 12px;
+      margin-top: 5px;
+      min-height: 18px;
+      overflow-wrap: anywhere;
+    }
+
+    #cache.cacheok {
+      color: var(--green);
+    }
+
+    #browser {
+        color: var(--dim);
+        display: block;
+        font-size: 12px;
+        margin-top: 5px;
+        overflow-wrap: anywhere;
+    }
+    
+    #browser.browserok {
+        color: var(--green);
+    }
+
+    .status-container {
+      color: var(--muted);
+      padding: 14px 18px;
+    }
+
+    .status-label,
+    .section-title {
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      margin-bottom: 12px;
+      padding-bottom: 9px;
+      text-transform: uppercase;
+    }
+
+    #state {
+      background: var(--panel);
+      border: 1px solid var(--line-bright);
+      color: var(--text);
+      font: inherit;
+      font-size: 13px;
+      line-height: 1.45;
+      min-height: 42px;
+      padding: 10px 14px;
+      white-space: pre-wrap;
+    }
+
+    #state.ok {
+      color: var(--green);
+    }
+
+    #state.warn {
+      color: var(--yellow);
+    }
+
+    #state.bad {
+      color: var(--red);
+    }
+
+    .controls-section {
+      margin-top: 12px;
+      padding: 16px 18px;
+    }
+
+    #controls {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+    }
+
+    .control-label {
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .action-button,
+    .auto-jb-label {
+      background: var(--panel);
+      border: 1px solid var(--line-bright);
+      border-radius: 0;
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      min-height: 42px;
+      padding: 8px 14px;
+      transition:
+        background-color 160ms ease,
+        border-color 160ms ease,
+        color 160ms ease;
+    }
+
+    .action-button:hover,
+    .action-button:focus,
+    .auto-jb-label:hover {
+      background: var(--raised);
+      border-color: var(--green);
+      color: var(--green);
+      outline: none;
+    }
+
+    #jailbreakBtn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 140px;
+    }
+
+    #jailbreakBtn:disabled {
+      cursor: wait;
+      opacity: 0.55;
+    }
+
+    .auto-jb {
+      align-items: center;
+      display: inline-flex;
+      width: fit-content;
+    }
+
+    .auto-jb-label {
+      align-items: center;
+      display: inline-flex;
+      font-size: 14px;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    #autoJbInput {
+      accent-color: var(--green);
+      height: 18px;
+      margin: 0;
+      width: 18px;
+    }
+
+    #autoJbCountdown {
+      color: var(--green);
+      font-size: 13px;
+      min-width: 34px;
+    }
+
+    .credits {
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      flex: 0 0 auto;
+      font-size: 13px;
+      margin: 0 auto;
+      padding: 8px 20px 10px;
+      text-align: center;
+      width: min(100% - 64px, 1120px);
+    }
+
+    .credits a {
+      color: var(--text);
+    }
+
+    .credits a:hover,
+    .credits a:focus {
+      color: var(--green);
+    }
+
+    @media (max-width: 820px) {
+      body {
+        overflow: auto;
+      }
+
+      .container {
+        justify-content: flex-start;
+        padding: 24px 0 20px;
+        width: min(100% - 32px, 560px);
+      }
+
+      .header-section {
+        padding: 20px 18px 22px;
+      }
+
+      .header-section::after {
+        display: none;
+      }
+
+      .main-title {
+        font-size: clamp(30px, 9vw, 44px);
+      }
+
+      #controls {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .action-button,
+      .auto-jb {
+        width: 100%;
+      }
+
+      .auto-jb-label {
+        width: fit-content;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .main-title {
+        font-size: 30px;
+      }
+
+      .auto-jb-label {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <section class="header-section">
+      <h1 class="main-title">Play Station 4 Slopkit</h1>
+      <p class="subtitle">Offline PlayStation 4 Exploit Host</p>
+      <p class="version-info">PS4 FW 13.02–13.52</p>
+      <p id="det">Detecting firmware...</p>
+      <p id="cache">Checking offline cache...</p>
+      <p id="browser">Detecting browser...</p>
+    </section>
+    <section class="status-container">
+      <div class="status-label">System status</div>
+      <div id="state" class="ok">Ready. Waiting for user action...</div>
+    </section>
+    <section class="controls-section">
+      <div class="section-title">Exploit control</div>
+      <div id="controls">
+        <span class="control-label">Manual launch</span>
+        <button id="jailbreakBtn" class="action-button" type="button">
+          Jailbreak
+        </button>
+        <div class="auto-jb">
+          <label class="auto-jb-label" for="autoJbInput">
+            <input id="autoJbInput" type="checkbox">
+            <span>Auto Jailbreak</span>
+            <span id="autoJbCountdown" aria-live="polite"></span>
+          </label>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="credits">
+    <span>Github Repository</span>
+    <span> - </span>
+    <a href="https://github.com/itskenethb?tab=repositories">itskenethb</a>
+  </footer>
+
+  <script>
+  (function () {
+    var browserEl = document.getElementById("browser");
+    var stateEl = document.getElementById("state");
+    var detEl = document.getElementById("det");
+    var cacheEl = document.getElementById("cache");
+    var jailbreakBtn = document.getElementById("jailbreakBtn");
+    var autoJbInput = document.getElementById("autoJbInput");
+    var autoJbCountdown = document.getElementById("autoJbCountdown");
+
+    var params = new URLSearchParams(location.search);
+    var autoJailbreakTimer = null;
+    var launchAllowed = false;
+
+   var browserEl = document.getElementById("browser");
+   
+   function detectBrowser() {
+    var ua = navigator.userAgent || "";
+    var device = "Unknown device";
+
+    if (/PlayStation 4/i.test(ua)) {
+        device = "PlayStation 4";
+    } else if (/PlayStation 5/i.test(ua)) {
+        device = "PlayStation 5";
+    } else if (/Windows/i.test(ua)) {
+        device = "Windows";
+    } else if (/Android/i.test(ua)) {
+        device = "Android";
+    } else if (/iPhone/i.test(ua)) {
+        device = "iPhone";
+    } else if (/iPad/i.test(ua)) {
+        device = "iPad";
+    } else if (/Macintosh/i.test(ua)) {
+        device = "Mac";
+    } else if (/Linux/i.test(ua)) {
+        device = "Linux";
+    }
+    browserEl.textContent = "Running on: " + device + " | " + ua;
+}
+detectBrowser();
+
+    function setState(text, cls) {
+      stateEl.textContent = text;
+      stateEl.className = cls || "";
+    }
+
+    function setCache(text, ok) {
+      cacheEl.textContent = text;
+      cacheEl.className = ok ? "cacheok" : "";
+    }
+
+    /*
+     * Firmware detection
+     * The PS4 reports the minor firmware component in hexadecimal.
+     */
+    var SUPPORTED = {
+      1302: 1,
+      1304: 1,
+      1350: 1,
+      1352: 1
+    };
+
+    var key = null;
+    var fwnum = null;
+
+    var m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
+
+    if (m) {
+      var ms = parseInt(m[2], 16).toString(16);
+
+      if (ms.length < 2) {
+        ms = "0" + ms;
+      }
+
+      key = m[1] + "." + ms;
+      fwnum = parseInt(m[1], 10) * 100 + parseInt(ms, 10);
+    }
+
+    var forced = params.get("force") === "1";
+    var supported = forced || (fwnum !== null && SUPPORTED[fwnum] === 1);
+
+    detEl.innerHTML =
+      "firmware <b>" + (key || "unknown") + "</b>" +
+      (supported
+        ? " &middot; <b>supported</b>"
+        : " &middot; not in this build's kernel table");
+
+    /*
+     * IMPORTANT:
+     * Unlike the original second page, successful cache validation does
+     * NOT automatically launch jb.html. The user must press Jailbreak,
+     * or explicitly enable Auto Jailbreak.
+     */
+    var target = "jb.html" + location.search;
+
+    function go() {
+      if (!launchAllowed) {
+        return;
+      }
+
+      setState("loading jailbreak...", "warn");
+      jailbreakBtn.disabled = true;
+
+      setTimeout(function () {
+        location.replace(target);
+      }, 100);
+    }
+
+    function startAutoJailbreak() {
+      if (!supported || !launchAllowed) {
+        return;
+      }
+
+      if (autoJailbreakTimer !== null) {
+        clearInterval(autoJailbreakTimer);
+        autoJailbreakTimer = null;
+      }
+
+      var countdown = 5;
+
+      autoJbCountdown.textContent = "in: " + countdown;
+      setState("AUTO JAILBREAK armed...", "warn");
+
+      autoJailbreakTimer = setInterval(function () {
+        countdown--;
+
+        if (countdown > 0) {
+          autoJbCountdown.textContent = "in: " + countdown;
+        } else {
+          clearInterval(autoJailbreakTimer);
+          autoJailbreakTimer = null;
+          autoJbCountdown.textContent = "";
+          go();
+        }
+      }, 1000);
+    }
+
+    function stopAutoJailbreak() {
+      if (autoJailbreakTimer !== null) {
+        clearInterval(autoJailbreakTimer);
+        autoJailbreakTimer = null;
+      }
+
+      autoJbCountdown.textContent = "";
+    }
+
+    /*
+     * Firmware gate:
+     * Unsupported firmware is never launched automatically.
+     * The Jailbreak button can still be enabled with force=1.
+     */
+    if (!supported) {
+      setState(
+        "UNSUPPORTED FIRMWARE\n" +
+        (key || "unknown") +
+        " -- use ?force=1 to enable manual launch.",
+        "bad"
+      );
+
+      jailbreakBtn.disabled = true;
+      autoJbInput.disabled = true;
+    } else {
+      launchAllowed = true;
+      jailbreakBtn.disabled = false;
+      autoJbInput.disabled = false;
+      setState("Ready. Press Jailbreak to launch.", "ok");
+    }
+
+    /*
+     * Cache validation.
+     * Cache status is displayed, but it never redirects the page.
+     */
+    var ac = window.applicationCache;
+
+    if (!ac || !document.documentElement.hasAttribute("manifest")) {
+      setCache("application cache unavailable");
+    } else if (!navigator.onLine) {
+      setCache("offline -- using cached resources", true);
+    } else if (ac.status === ac.IDLE) {
+      setCache("cached -- offline ready", true);
+    } else if (ac.status === ac.UPDATEREADY) {
+      try { ac.swapCache(); } catch (e) {}
+      setCache("update downloaded -- offline ready", true);
+    } else {
+      setCache("checking cache...");
+
+      ac.addEventListener("downloading", function () {
+        setCache("caching for offline (first run)...");
+      }, false);
+
+      ac.addEventListener("progress", function (e) {
+        if (e && e.total) {
+          setCache(
+            "caching " +
+            Math.round((e.loaded / e.total) * 100) +
+            "%"
+          );
+        }
+      }, false);
+
+      ac.addEventListener("cached", function () {
+        setCache("cached for offline use", true);
+      }, false);
+
+      ac.addEventListener("updateready", function () {
+        try { ac.swapCache(); } catch (e) {}
+        setCache("update downloaded -- offline ready", true);
+      }, false);
+
+      ac.addEventListener("noupdate", function () {
+        setCache("cached -- offline ready", true);
+      }, false);
+
+      ac.addEventListener("error", function () {
+        setCache("cache unavailable");
+      }, false);
+
+      ac.addEventListener("obsolete", function () {
+        setCache("cache obsolete");
+      }, false);
+    }
+
+    jailbreakBtn.addEventListener("click", function () {
+      stopAutoJailbreak();
+
+      if (!supported) {
+        setState(
+          "Launch blocked for unsupported firmware.\n" +
+          "Use ?force=1 if you intentionally want to run it.",
+          "bad"
+        );
+        return;
+      }
+
+      launchAllowed = true;
+      go();
+    });
+
+    autoJbInput.addEventListener("change", function () {
+      if (this.checked) {
+        if (!supported || !launchAllowed) {
+          this.checked = false;
+          return;
+        }
+
+        startAutoJailbreak();
+      } else {
+        stopAutoJailbreak();
+
+        if (supported) {
+          setState("Ready. Press Jailbreak to launch.", "ok");
+        }
+      }
+    });
+
+  })();
+  </script>
+</body>
+</html>

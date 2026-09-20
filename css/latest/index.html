@@ -23,6 +23,15 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { background: var(--bg); }
     html, body { min-height: 100%; }
+    
+    #cache {
+      color: var(--dim);
+      display: block;
+      font-size: 12px;
+      margin-top: 5px;
+      min-height: 18px;
+      overflow-wrap: anywhere;
+    }
 
     body {
       background-color: var(--bg);
@@ -236,6 +245,7 @@
       <p class="subtitle">Offline CSSFontFace Auto GoldHEN</p>
       <p class="version-info">CSSFontFace PS4 FW 6.00–11.02 GoldHEN v2.4b18.10</p>
       <p id="UA">Running on:</p>
+      <p id="cache">Checking offline cache...</p>
     </section>
 
     <section class="status-container">
@@ -271,6 +281,71 @@
 
   <script src="src/main.js"></script>
   <script src="includes/script.js"></script>
+
+  <script>
+    (function () {var cacheEl = document.getElementById("cache");
+        function setCache(text, ok) {
+            if (!cacheEl) return;
+            cacheEl.textContent = text;
+            cacheEl.className = ok ? "cacheok" : "";
+        }
+
+        var ac = window.applicationCache;
+
+        if (!ac || !document.documentElement.hasAttribute("manifest")) {
+            setCache("application cache unavailable");
+        } else if (!navigator.onLine) {
+            setCache("offline -- using cached resources", true);
+        } else if (ac.status === ac.IDLE) {
+            setCache("cached -- offline ready", true);
+        } else if (ac.status === ac.UPDATEREADY) {
+            try {
+                ac.swapCache();
+            } catch (e) {}
+            setCache("update downloaded -- offline ready", true);
+        } else {
+            setCache("checking cache...");
+
+            ac.addEventListener("downloading", function () {
+                setCache("caching for offline (first run)...");
+            }, false);
+
+            ac.addEventListener("progress", function (e) {
+                if (e && e.total) {
+                    setCache(
+                        "caching " +
+                        Math.round((e.loaded / e.total) * 100) +
+                        "%"
+                    );
+                }
+            }, false);
+
+            ac.addEventListener("cached", function () {
+                setCache("cached for offline use", true);
+            }, false);
+
+            ac.addEventListener("updateready", function () {
+                try {
+                    ac.swapCache();
+                } catch (e) {}
+                setCache("update downloaded -- offline ready", true);
+            }, false);
+
+            ac.addEventListener("noupdate", function () {
+                setCache("cached -- offline ready", true);
+            }, false);
+
+            ac.addEventListener("error", function () {
+                setCache("cache unavailable");
+            }, false);
+
+            ac.addEventListener("obsolete", function () {
+                setCache("cache obsolete");
+            }, false);
+        }
+    })();
+    </script>
+
 </body>
 
 </html>
