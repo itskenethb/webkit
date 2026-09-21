@@ -8,7 +8,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/platform-PlayStation%204-111827?style=for-the-badge&logo=playstation&logoColor=white" alt="Platform: PlayStation 4">
-  <img src="https://img.shields.io/badge/firmware-5.05--13.00-16a34a?style=for-the-badge" alt="Firmware range: 5.05 to 13.52">
+  <img src="https://img.shields.io/badge/firmware-5.05--13.52-16a34a?style=for-the-badge" alt="Firmware range: 5.05 to 13.52">
   <img src="https://img.shields.io/badge/mode-offline--first-0f766e?style=for-the-badge" alt="Offline-first">
   <img src="https://img.shields.io/badge/interface-terminal--style-334155?style=for-the-badge" alt="Terminal-style interface">
 </p>
@@ -43,7 +43,7 @@ PlayStation Webkit is a self-contained collection of static PS4 host pages. It p
 - Dedicated offline host pages for PS4 firmware 5.05 and 6.72.
 - PSFree/Lapse host flows for firmware 7.00–8.52 and 9.00–9.60.
 - A CSSFontFace UAF host flow for firmware 6.00–11.02.
-- A Slopkit port host for firmware 11.00-13.00.
+- A Slopkit port host for firmware 11.00-13.00 and 13.02-13.52.
 - GoldHEN v2.4b18.10, v2.4b18.9 and v2.4b18.5 selection where the host supports both builds.
 - HEN 2.2.0 Beta selection on the latest jailbreakable firmwares
 - AppCache-based offline operation with firmware-specific cache and manifest files.
@@ -156,7 +156,7 @@ All host branches use relative assets and browser application caching. Cache fil
 | **7.00–8.52** | Select a build in `700/version-selector.html`, then use `cache.html` or `cache5.html` to install `PSPulse.cache` or `PSPulse5.cache`. |
 | **9.00–9.60** | Select a build in `900/version-selector.html`, then use `cache.html` or `cache5.html` to install `PSPulse.manifest` or `PSPulse5.manifest`. |
 | **CSSFontFace** | Select a build in `css/version-selector.html`; the chosen `stable` or `latest` page uses its own `cache.manifest`. |
-| **Slopkit** | Select a build in `slopkit/version-selector.html`; or `uaf/version-selector.html`; the chosen `variation 1` or `variation 2` page uses its own `cache.manifest`. |
+| **Slopkit** | Select a build in `slopkit/version-selector.html`; or `uaf/version-selector.html`; the choosen `latest` or `previous` and `variation 1` or `variation 2` page uses its own `cache.manifest`. |
 
 After the first successful cache installation, close and reopen the PS4 browser when the page instructs you to do so. If a page still serves an older layout or script, clear the host's browser data and repeat the cache installation.
 
@@ -167,7 +167,7 @@ The repository also includes small generator scripts for rebuilding cache files 
 1. Serve the repository root through an HTTP or HTTPS static server. The PS4 browser should not be expected to run the complete flow from an unsupported `file://` URL.
 2. Open the root [`index.html`](./index.html) in the PS4 browser.
 3. Select the exact firmware range matching the console.
-4. If the selected branch has a GoldHEN or HEN version selector, choose **Latest** or **Stable** and wait for the cache page to finish.
+4. If the selected branch has a GoldHEN or HEN version selector, choose **Latest** or **Stable** or **Previous** or **Variation 1** or **Variation 2** and wait for the cache page to finish.
 5. On the host page, wait for the ready/status message before starting the exploit.
 6. After GoldHEN or HEN has loaded, use only the tools shown by that host branch.
 
