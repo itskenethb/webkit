@@ -2,6 +2,50 @@
 <html lang="en">
 
 <head>
+    <script>
+        (function () {
+            var ua = navigator.userAgent;
+            var isPS4 = /PlayStation 4/i.test(ua) && !/PlayStation 5/i.test(ua);
+            var isUnsupported = !isPS4;
+
+            if (isUnsupported) {
+                document.documentElement.classList.add('unsupported-device');
+            }
+
+            window.__PS4_ONLY_ALLOWED__ = isPS4;
+        })();
+    </script>
+    <style>
+        html.unsupported-device body > * {
+            display: none !important;
+        }
+
+        html.unsupported-device body {
+            width: 100vw !important;
+            height: 100vh !important;
+            min-height: 100vh !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: #050706 !important;
+        }
+
+        html.unsupported-device body::before {
+            content: "UNSUPPORTED DEVICE";
+            display: block;
+            color: #73f5a6;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+            font-size: clamp(24px, 5vw, 42px);
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-align: center;
+            text-transform: uppercase;
+        }
+    </style>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlayStation 4 Jailbreak Selector</title>
@@ -1090,6 +1134,18 @@
             text-align: right;
         }
 
+        .fw-option.fw-disabled {
+            opacity: 0.30;
+            cursor: not-allowed;
+            pointer-events: none;
+            filter: grayscale(1);
+        }
+
+        .fw-option.fw-disabled:hover {
+            background: transparent;
+            transform: none;
+        }
+
         .credits {
             background: transparent;
             border-top: 1px solid var(--terminal-line);
@@ -1287,6 +1343,15 @@
 
     </div>
 
+    <!-- FW 11.00 - 11.02 FontFace -->
+    <div class="fw-option fw-css" data-fw="fontface" tabindex="0" role="option">
+        <div class="fw-option-info">
+            <div class="fw-option-title">FW 11.00–11.02</div>
+            <div class="fw-option-desc">FontFace exploit for Play Station 4 with automatic GoldHEN</div>
+        </div>
+        <div class="fw-option-version">Offline FontFace</div>
+    </div>
+
     <!-- FW 6.00 - 11.02 -->
     <div class="fw-option fw-css" data-fw="css" tabindex="0" role="option">
         <div class="fw-option-info">
@@ -1345,8 +1410,70 @@
     </div>
 
     <script>
+        function detectPS4Firmware() {
+            var ua = navigator.userAgent;
+            if (/PlayStation 5/i.test(ua)) {
+                return null;
+            }
+            if (!/PlayStation 4/i.test(ua)) {
+                return null;
+            }
+            var match = ua.match(/PlayStation 4[^\d]*(\d+\.\d+)/i);
+            if (!match) {
+                return null;
+            }
+            return parseFloat(match[1]);
+        }
+
+       function getSupportedFirmware(firmware) {
+        if (firmware === null) return [];
+        if (firmware === 5.05) return ['505'];
+        if (firmware === 6.72) return ['672', 'css'];
+        if (firmware >= 7.00 && firmware <= 8.52) {return ['700', 'css'];}
+        if (firmware >= 9.00 && firmware <= 9.60) {return ['900', 'css'];}
+        // CSS: 6.00–10.50
+        if (firmware >= 6.00 && firmware <= 10.50) {return ['css'];}
+        // 11.00 = Slopkit + CSS
+        if (firmware === 11.00) {return ['slopkit', 'css'];}
+        // 11.01–11.02 = Fontface only
+        if (firmware >= 11.01 && firmware <= 11.02) {return ['css'];}
+        // 11.03–13.00 = Slopkit
+        if (firmware >= 11.50 && firmware <= 13.00) {return ['slopkit'];}
+        // 13.02–13.52 = UAF
+        if (firmware >= 13.02 && firmware <= 13.52) {return ['uaf'];}
+        return [];
+    }
+
+        function applyPS4FirmwareDetection() {
+            var firmware = detectPS4Firmware();
+            var supportedFirmware = getSupportedFirmware(firmware);
+            var options = document.querySelectorAll('.fw-option');
+
+            for (var i = 0; i < options.length; i++) {
+                var option = options[i];
+                var optionFirmware = option.getAttribute('data-fw');
+                var enabled = supportedFirmware.indexOf(optionFirmware) !== -1;
+
+                option.classList.toggle('fw-disabled', !enabled);
+                option.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+                option.setAttribute('tabindex', enabled ? '0' : '-1');
+            }
+
+            return {
+                firmware: firmware,
+                supported: supportedFirmware.length > 0,
+                firmwareType: supportedFirmware
+            };
+        }
+
         function selectFirmware(fw) {
+            var firmware = detectPS4Firmware();
+            var supportedFirmware = getSupportedFirmware(firmware);
+
+            if (supportedFirmware.indexOf(fw) === -1) return;
+
             localStorage.setItem('selectedFirmware', fw);
+
             switch (fw) {
                 case '505':
                     window.location.href = '505/index.html';
@@ -1363,7 +1490,7 @@
                 case 'css':
                     window.location.href = 'css/version-selector.html';
                     break;
-                case 'slopkit': 
+                case 'slopkit':
                     window.location.href = 'slopkit/version-selector.html';
                     break;
                 case 'uaf':
@@ -1372,24 +1499,35 @@
             }
         }
 
+        var ps4FirmwareStatus = applyPS4FirmwareDetection();
         var selectorBtn = document.getElementById('fwSelectorBtn');
         var selectorList = document.getElementById('fwSelectorList');
         var options = document.querySelectorAll('.fw-option');
         var currentFocus = -1;
         var isOpen = false;
         var savedFirmwareValue = localStorage.getItem('selectedFirmware');
-        var hasSavedFirmware = savedFirmwareValue !== null;
-        var savedFirmware = savedFirmwareValue || '900';
+        var savedFirmware = savedFirmwareValue || '';
 
         for (var initialIndex = 0; initialIndex < options.length; initialIndex++) {
-            if (options[initialIndex].getAttribute('data-fw') === savedFirmware) {
+            var initialOption = options[initialIndex];
+            var initialEnabled = initialOption.getAttribute('aria-disabled') !== 'true';
+
+            if (initialEnabled && initialOption.getAttribute('data-fw') === savedFirmware) {
                 currentFocus = initialIndex;
-                if (hasSavedFirmware) options[initialIndex].setAttribute('aria-selected', 'true');
+                initialOption.setAttribute('aria-selected', 'true');
                 break;
             }
         }
 
-        if (currentFocus < 0) currentFocus = 0;
+        if (currentFocus < 0) {
+            for (var firstEnabledIndex = 0; firstEnabledIndex < options.length; firstEnabledIndex++) {
+                if (options[firstEnabledIndex].getAttribute('aria-disabled') !== 'true') {
+                    currentFocus = firstEnabledIndex;
+                    options[firstEnabledIndex].setAttribute('aria-selected', 'true');
+                    break;
+                }
+            }
+        }
 
         function updateDropdownHeight() {
             if (!isOpen) return;
@@ -1398,24 +1536,19 @@
             var gap = 8;
             var bottomPadding = 12;
             var availableHeight = window.innerHeight - rect.bottom - gap - bottomPadding;
-
-            /* Never allow a negative/zero height. */
             availableHeight = Math.max(120, Math.floor(availableHeight));
-
             selectorList.style.maxHeight = availableHeight + 'px';
         }
 
         function openList() {
+            if (currentFocus < 0) return;
+
             isOpen = true;
             selectorList.classList.add('open');
             selectorBtn.classList.add('open');
             selectorBtn.setAttribute('aria-expanded', 'true');
             document.querySelector('.container').style.zIndex = '30';
-
-            /* Calculate the real space available below the button.
-               The scrollbar appears only if the options exceed that space. */
             updateDropdownHeight();
-
             options[currentFocus].focus();
         }
 
@@ -1429,7 +1562,11 @@
         }
 
         function confirmCurrentOption() {
+            if (currentFocus < 0) return;
+
             var selected = options[currentFocus];
+            if (selected.getAttribute('aria-disabled') === 'true') return;
+
             selectFirmware(selected.getAttribute('data-fw'));
         }
 
@@ -1441,19 +1578,22 @@
         for (var i = 0; i < options.length; i++) {
             (function (index) {
                 options[index].addEventListener('focus', function () {
+                    if (this.getAttribute('aria-disabled') === 'true') return;
                     currentFocus = index;
                     if (!isOpen) openList();
                 });
 
                 options[index].addEventListener('click', function () {
+                    if (this.getAttribute('aria-disabled') === 'true') return;
                     currentFocus = index;
                     confirmCurrentOption();
                 });
 
                 options[index].addEventListener('keydown', function (event) {
+                    if (this.getAttribute('aria-disabled') === 'true') return;
+
                     var key = event.key || event.keyCode;
-                    // Do not intercept arrow keys: PS4 Browser uses them to
-                    // move its visible focus pointer between list options.
+
                     if (key === 'Enter' || key === ' ' || key === 13 || key === 32) {
                         event.preventDefault();
                         confirmCurrentOption();
@@ -1482,10 +1622,7 @@
             }
         });
 
-        window.addEventListener('resize', function () {
-            updateDropdownHeight();
-        });
-
+        window.addEventListener('resize', updateDropdownHeight);
         window.addEventListener('orientationchange', function () {
             setTimeout(updateDropdownHeight, 50);
         });
@@ -1495,6 +1632,9 @@
                 closeList(false);
             }
         });
-    </script>
-</body>
+
+        console.log('PS4 Firmware:', ps4FirmwareStatus.firmware);
+        console.log('Supported:', ps4FirmwareStatus.supported);
+        console.log('Firmware Type:', ps4FirmwareStatus.firmwareType);
+    </script></body>
 </html>
