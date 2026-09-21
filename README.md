@@ -8,7 +8,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/platform-PlayStation%204-111827?style=for-the-badge&logo=playstation&logoColor=white" alt="Platform: PlayStation 4">
-  <img src="https://img.shields.io/badge/firmware-5.05--13.00-16a34a?style=for-the-badge" alt="Firmware range: 5.05 to 13.52">
+  <img src="https://img.shields.io/badge/firmware-5.05--13.52-16a34a?style=for-the-badge" alt="Firmware range: 5.05 to 13.52">
   <img src="https://img.shields.io/badge/mode-offline--first-0f766e?style=for-the-badge" alt="Offline-first">
   <img src="https://img.shields.io/badge/interface-terminal--style-334155?style=for-the-badge" alt="Terminal-style interface">
 </p>
