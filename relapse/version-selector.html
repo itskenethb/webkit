@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlayStation 4 Slopkit - Version Selection</title>
+    <title>PlayStation 4 Relapse - Version Selection</title>
     <link rel="icon" type="image/png" href="/pstation.png">
     <style>
         :root {
@@ -79,7 +79,7 @@
 
         .header-section::before {
             color: var(--green);
-            content: "●  PS4 / Slopkit HOST";
+            content: "●  PS4 / Relapse HOST";
             display: block;
             font-size: 14px;
             letter-spacing: 0.12em;
@@ -347,7 +347,7 @@
             }
 
             .card-action {
-                display: none;
+                display: block;
             }
 
             .version-description {
@@ -380,7 +380,7 @@
 
     <main class="container">
         <header class="header-section">
-            <h1 class="main-title">Play Station 4 Slopkit</h1>
+            <h1 class="main-title">Play Station 4 Relapse</h1>
             <p class="subtitle">Choose Your Homebrew Enabler</p>
             <p class="description">Select the Homebrew Enabler to cache and use. The host supports PS4 firmwares ranging from 13.02–13.52.</p>
         </header>
@@ -396,6 +396,17 @@
                         <div class="version-description">[Minimal]</div>
                         <div class="version-title">HEN<span class="version-number">2.2.0 Beta</span></div>
                         <div class="version-description">Latest HEN in beta for initial release of latest exploit</div>
+                    </div>
+                    <span class="card-action">[ SELECT ]</span>
+                </div>
+                <div class="version-card latest" onclick="selectVersion('Beta')" tabindex="0"
+                    data-version="latest">
+                    <span class="card-index">02</span>
+                    <div>
+                        <div class="version-badge latest">Variation 2</div>
+                        <div class="version-description">[Full Featured]</div>
+                        <div class="version-title">GoldHEN<span class="version-number">Beta v2.4b18.11(13.52) and v2.4b18.12(13.02-13.50)</span></div>
+                        <div class="version-description">Latest GoldHEN in beta that is popular among the users</div>
                     </div>
                     <span class="card-action">[ SELECT ]</span>
                 </div>
@@ -418,8 +429,8 @@
             // Redirect to appropriate cache page based on version
             if (version === '2.2.0Beta') {
                 window.location.href = 'HEN/index.html';
-            } else if (version === 'v2.4b18.9') {
-                window.location.href = 'previous/index.html';
+            } else if (version === 'Beta') {
+                window.location.href = 'goldhen/index.html';
             }
         }
 

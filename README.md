@@ -44,7 +44,7 @@ PlayStation Webkit is a self-contained collection of static PS4 host pages. It p
 - PSFree/Lapse host flows for firmware 7.00–8.52 and 9.00–9.60.
 - A CSSFontFace UAF host flow for firmware 6.00–11.02.
 - A Slopkit port host for firmware 11.00-13.00 and 13.02-13.52.
-- GoldHEN v2.4b18.10, v2.4b18.9 and v2.4b18.5 selection where the host supports both builds.
+- GoldHEN v2.4b18.12, v2.4b18.11, v2.4b18.10, v2.4b18.9 and v2.4b18.5 selection where the host supports both builds.
 - HEN 2.2.0 Beta selection on the latest jailbreakable firmwares
 - AppCache-based offline operation with firmware-specific cache and manifest files.
 - Firmware-specific payload utilities on the host branches that provide them.
@@ -61,7 +61,7 @@ PlayStation Webkit is a self-contained collection of static PS4 host pages. It p
 | **9.00–9.60** | `900/version-selector.html` | PSFree + Lapse host flow | Version selector, then offline cache page | Included |
 | **6.00–11.02** | `css/version-selector.html` | CSSFontFace UAF + Lapse/Poops | Version selector, then `stable` or `latest` host | No separate utility-payload menu |
 | **11.00–13.00** | `slopkit/version-selector.html` | Slopkit UAF + Lapse/Poops | Version selector, then `stable` or `previous` host | No separate utility-payload menu |
-| **13.02–13.52** | `uaf/version-selector.html` | Slopkit UAF + Poops | Version selector, then `variation 1` or `variation 2 (Coming Soon)` host | No separate utility-payload menu |
+| **13.02–13.52** | `relapse/version-selector.html` | Slopkit Relapse | Version selector, then `variation 1 hen` or `variation 2 goldhen` host | No separate utility-payload menu |
 
 
 The root selector stores the selected firmware locally and routes to the correct branch. Always use the host intended for the exact firmware installed on the console.
@@ -92,9 +92,11 @@ The project is intentionally static. HTML pages provide the user interface, Java
 ## Homebrew Enablers versions
 
 The repository contains three GoldHEN or HEN choices where supported:
-- **HEN v2.2.0 Beta** — the open source homebrew enabler used to test the jailbreak in the latest firmwares.
-- **GoldHEN v2.4b18.10** — the latest build exposed by the selectors.
-- **GoldHEN v2.4b18.9** — the previous build that supports also the latest jailbreakable firmwares
+- **HEN v2.2.0 Beta** — the open source HEN used to test the newly discovered jailbreak in latest firmwares.
+- **GoldHEN v2.4b18.12** — the latest build that supports 13.02-13.50 firmwares no new features.
+- **GoldHEN v2.4b18.11** — the latest build that supports 13.52 firmware no new features.
+- **GoldHEN v2.4b18.10** — the previous latest build that supports up to 13.00 with auto load payload in utility.
+- **GoldHEN v2.4b18.9** — the previous build that supports also supports up to 13.00
 - **GoldHEN v2.4b18.5** — the stable/previous build for users who prefer the older version.
 
 The 7.00–8.52 and 9.00–9.60 branches select a GoldHEN build through their version selector and cache page. The CSSFontFace branch uses [`css/version-selector.html`](./css/version-selector.html), which routes to:
@@ -145,6 +147,15 @@ The Slopkit branch deliberately excludes the standalone utility-payload menu use
 - Auto Jailbreak countdown and manual `Jailbreak` activation;
 - automatic loading of the selected GoldHEN or HEN build.
 
+### Slopkit Relapse host scope
+
+The Relapse branch deliberately excludes the standalone utility-payload menu used by the other host branches. The Slopkit Relapse exploit flow is memory-intensive by nature, so removing additional payload tools helps preserve the memory headroom needed for a more stable exploit and GoldHEN or HEN launch. Its interface is focused on:
+
+- exploit output;
+- homebrew enabler selection;
+- Auto Jailbreak countdown and manual `Jailbreak` activation;
+- automatic loading of the selected GoldHEN or HEN build.
+
 ## Offline caching
 
 All host branches use relative assets and browser application caching. Cache files must be served from the paths expected by their entry pages; do not rename or flatten the firmware directories after deployment.
@@ -156,7 +167,8 @@ All host branches use relative assets and browser application caching. Cache fil
 | **7.00–8.52** | Select a build in `700/version-selector.html`, then use `cache.html` or `cache5.html` to install `PSPulse.cache` or `PSPulse5.cache`. |
 | **9.00–9.60** | Select a build in `900/version-selector.html`, then use `cache.html` or `cache5.html` to install `PSPulse.manifest` or `PSPulse5.manifest`. |
 | **CSSFontFace** | Select a build in `css/version-selector.html`; the chosen `stable` or `latest` page uses its own `cache.manifest`. |
-| **Slopkit** | Select a build in `slopkit/version-selector.html`; or `uaf/version-selector.html`; the choosen `latest` or `previous` and `variation 1` or `variation 2` page uses its own `cache.manifest`. |
+| **Slopkit** | Select a build in `slopkit/version-selector.html`; the choosen `latest` or `previous` page uses its own `cache.manifest`. |
+| **Slopkit Relapse** | Select a build in `relapse/version-selector.html`; the choosen `variation 1` or `variation 2` page uses its own `cache.manifest`. |
 
 After the first successful cache installation, close and reopen the PS4 browser when the page instructs you to do so. If a page still serves an older layout or script, clear the host's browser data and repeat the cache installation.
 
@@ -202,7 +214,13 @@ The CSS control panel is kept small and predictable for the PS4 browser: exploit
 
 ### Slopkit branch
 
-The Slopkit implementation includes the Slopkit UAF userland path, shared memory/read-write/ROP helpers, Poops exploit chain, PS4 kernel support, firmware-specific kernel patches, and a terminal-style status logger. The `stable` and `previous` and `variation 1` and `varation 2` directories are intentionally parallel so they can be cached and served independently.
+The Slopkit implementation includes the Slopkit UAF userland path, shared memory/read-write/ROP helpers, Lapse and Poops exploit chain, PS4 kernel support, firmware-specific kernel patches, and a terminal-style status logger. The `stable` and `previous` directories are intentionally parallel so they can be cached and served independently.
+
+The CSS control panel is kept small and predictable for the PS4 browser: exploit output, chain selection, Jailbreak, and Auto Jailbreak. The radio-chain focus styling uses the broadly supported `:focus` selector so controller navigation remains visibly highlighted on the older PS4 browser engine.
+
+### Slopkit Relapse branch
+
+The Slopkit Relapse implementation includes the Slopkit UAF userland path, shared memory/read-write/ROP helpers, Relapse exploit chain, PS4 kernel support, firmware-specific kernel patches, and a terminal-style status logger. The `variation 1` and `varation 2` directories are intentionally parallel so they can be cached and served independently.
 
 The CSS control panel is kept small and predictable for the PS4 browser: exploit output, chain selection, Jailbreak, and Auto Jailbreak. The radio-chain focus styling uses the broadly supported `:focus` selector so controller navigation remains visibly highlighted on the older PS4 browser engine.
 
