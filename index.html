@@ -1325,7 +1325,7 @@
                <div id="fwSelectorList" class="fw-selector-list" role="listbox">
 
     <!-- FW 13.02 - 13.52 -->
-     <div class="fw-option fw-css" data-fw="uaf" tabindex="0" role="option">
+     <div class="fw-option fw-css" data-fw="relapse" tabindex="0" role="option">
         <div class="fw-option-info">
             <div class="fw-option-title">FW 13.02–13.52</div>
             <div class="fw-option-desc">Slopkit exploit port for Play Station 4 with automatic HEN or GoldHEN</div>
@@ -1439,8 +1439,8 @@
         if (firmware >= 11.01 && firmware <= 11.02) {return ['css'];}
         // 11.03–13.00 = Slopkit
         if (firmware >= 11.50 && firmware <= 13.00) {return ['slopkit'];}
-        // 13.02–13.52 = UAF
-        if (firmware >= 13.02 && firmware <= 13.52) {return ['uaf'];}
+        // 13.02–13.52 = Slopkit Relapse
+        if (firmware >= 13.02 && firmware <= 13.52) {return ['relapse'];}
         return [];
     }
 
@@ -1493,8 +1493,8 @@
                 case 'slopkit':
                     window.location.href = 'slopkit/version-selector.html';
                     break;
-                case 'uaf':
-                    window.location.href = 'uaf/version-selector.html';
+                case 'relapse':
+                    window.location.href = 'relapse/version-selector.html';
                     break;
             }
         }
