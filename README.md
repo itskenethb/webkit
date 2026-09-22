@@ -43,7 +43,7 @@ PlayStation Webkit is a self-contained collection of static PS4 host pages. It p
 - Dedicated offline host pages for PS4 firmware 5.05 and 6.72.
 - PSFree/Lapse host flows for firmware 7.00–8.52 and 9.00–9.60.
 - A CSSFontFace UAF host flow for firmware 6.00–11.02.
-- A Slopkit port host for firmware 11.00-13.00 and 13.02-13.52.
+- A Slopkit port host for firmware 11.00-13.00 and Slopkit Relapse for 13.02-13.52.
 - GoldHEN v2.4b18.12, v2.4b18.11, v2.4b18.10, v2.4b18.9 and v2.4b18.5 selection where the host supports both builds.
 - HEN 2.2.0 Beta selection on the latest jailbreakable firmwares
 - AppCache-based offline operation with firmware-specific cache and manifest files.
