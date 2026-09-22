@@ -1321,16 +1321,15 @@
                     <span class="fw-selector-text" id="fwSelectorText">Select Firmware Version</span>
                     <span class="fw-selector-arrow">▼</span>
                 </button>
-
                <div id="fwSelectorList" class="fw-selector-list" role="listbox">
 
     <!-- FW 13.02 - 13.52 -->
      <div class="fw-option fw-css" data-fw="relapse" tabindex="0" role="option">
         <div class="fw-option-info">
             <div class="fw-option-title">FW 13.02–13.52</div>
-            <div class="fw-option-desc">Slopkit exploit port for Play Station 4 with automatic HEN or GoldHEN</div>
+            <div class="fw-option-desc">Slopkit Relapse exploit for Play Station 4 with automatic HEN or GoldHEN</div>
         </div>
-        <div class="fw-option-version">Offline Slopkit</div>
+        <div class="fw-option-version">Offline Slopkit Relapse</div>
     </div>
 
     <!-- FW 11.00 - 13.00 -->
@@ -1340,16 +1339,6 @@
             <div class="fw-option-desc">Slopkit exploit port for Play Station 4 with automatic GOLDHEN</div>
         </div>
         <div class="fw-option-version">Offline Slopkit</div>
-
-    </div>
-
-    <!-- FW 11.00 - 11.02 FontFace -->
-    <div class="fw-option fw-css" data-fw="fontface" tabindex="0" role="option">
-        <div class="fw-option-info">
-            <div class="fw-option-title">FW 11.00–11.02</div>
-            <div class="fw-option-desc">FontFace exploit for Play Station 4 with automatic GoldHEN</div>
-        </div>
-        <div class="fw-option-version">Offline FontFace</div>
     </div>
 
     <!-- FW 6.00 - 11.02 -->
@@ -1435,8 +1424,8 @@
         if (firmware >= 6.00 && firmware <= 10.50) {return ['css'];}
         // 11.00 = Slopkit + CSS
         if (firmware === 11.00) {return ['slopkit', 'css'];}
-        // 11.01–11.02 = Fontface only
-        if (firmware >= 11.01 && firmware <= 11.02) {return ['css'];}
+        // 11.02 = Fontface only
+        if (firmware === 11.02) {return ['css'];}
         // 11.03–13.00 = Slopkit
         if (firmware >= 11.50 && firmware <= 13.00) {return ['slopkit'];}
         // 13.02–13.52 = Slopkit Relapse
