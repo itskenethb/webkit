@@ -92,11 +92,11 @@ The project is intentionally static. HTML pages provide the user interface, Java
 ## Homebrew Enablers versions
 
 The repository contains three GoldHEN or HEN choices where supported:
-- **HEN v2.2.0 Beta** — the open source HEN used to test the newly discovered jailbreak in latest firmwares.
+- **HEN v2.2.0 Beta** — the open source HEN used to test the newly discovered jailbreak in the latest firmwares.
 - **GoldHEN v2.4b18.12** — the latest build that supports 13.02-13.50 firmwares no new features.
 - **GoldHEN v2.4b18.11** — the latest build that supports 13.52 firmware no new features.
 - **GoldHEN v2.4b18.10** — the previous latest build that supports up to 13.00 with auto load payload in utility.
-- **GoldHEN v2.4b18.9** — the previous build that supports also supports up to 13.00
+- **GoldHEN v2.4b18.9** — the previous build that also supports up to 13.00
 - **GoldHEN v2.4b18.5** — the stable/previous build for users who prefer the older version.
 
 The 7.00–8.52 and 9.00–9.60 branches select a GoldHEN build through their version selector and cache page. The CSSFontFace branch uses [`css/version-selector.html`](./css/version-selector.html), which routes to:
