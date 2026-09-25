@@ -14,7 +14,7 @@
 </p>
 
 <!-- Replace the placeholder below with the raw GitHub URL of assets/showcase.webp after uploading the repository. -->
-![PlayStation Exploit Host Selector](https://github.com/itskenethb/webkit/blob/287c7761b1ab705c3c4cee1ffdbd58220f5da4ba/assets/showcase.webp)
+![PlayStation Exploit Host Selector](https://github.com/itskenethb/webkit/blob/main/index.html)
 
 PlayStation Webkit is a self-contained collection of static PS4 host pages. It provides one entry point for choosing a console firmware, then routes to the corresponding exploit and GoldHEN or HEN flow. The project is designed for local hosting, offline caching, and use in the PS4 browser.
 
