@@ -44,7 +44,7 @@ PlayStation Webkit is a self-contained collection of static PS4 host pages. It p
 - PSFree/Lapse host flows for firmware 7.00–8.52 and 9.00–9.60.
 - A CSSFontFace UAF host flow for firmware 6.00–11.02.
 - A Slopkit port host for firmware 11.00-13.00 and Slopkit Relapse for 13.02-13.52.
-- GoldHEN v2.4b18.12, v2.4b18.11, v2.4b18.10, v2.4b18.9 and v2.4b18.5 selection where the host supports both builds.
+- GoldHEN v2.4b18.12, v2.4b18.11, v2.4b18.9 and v2.4b18.5 selection where the host supports both builds.
 - HEN 2.2.0 Beta selection on the latest jailbreakable firmwares
 - AppCache-based offline operation with firmware-specific cache and manifest files.
 - Firmware-specific payload utilities on the host branches that provide them.
@@ -95,13 +95,12 @@ The repository contains three GoldHEN or HEN choices where supported:
 - **HEN v2.2.0 Beta** — the open source HEN used to test the newly discovered jailbreak in the latest firmwares.
 - **GoldHEN v2.4b18.12** — the latest build that supports 13.02-13.50 firmwares no new features.
 - **GoldHEN v2.4b18.11** — the latest build that supports 13.52 firmware no new features.
-- **GoldHEN v2.4b18.10** — the previous latest build that supports up to 13.00 with auto load payload in utility.
 - **GoldHEN v2.4b18.9** — the previous build that also supports up to 13.00
 - **GoldHEN v2.4b18.5** — the stable/previous build for users who prefer the older version.
 
 The 7.00–8.52 and 9.00–9.60 branches select a GoldHEN build through their version selector and cache page. The CSSFontFace branch uses [`css/version-selector.html`](./css/version-selector.html), which routes to:
 
-- [`css/latest/index.html`](./css/latest/index.html) for v2.4b18.10;
+- [`css/latest/index.html`](./css/latest/index.html) for v2.4b18.12;
 - [`css/stable/index.html`](./css/stable/index.html) for v2.4b18.5.
 
 ## Payload tools
