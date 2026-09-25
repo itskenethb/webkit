@@ -28,6 +28,20 @@
       padding: 0;
     }
 
+    #cache {
+      color: var(--dim);
+      display: block;
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 10px;
+      min-height: 24px;
+      overflow-wrap: anywhere;
+    }
+
+    #cache.cacheok {
+      color: var(--green);
+    }
+
     html,
     body {
       min-height: 100%;
@@ -306,6 +320,7 @@
       <h1 class="main-title">PlayStation 4 Jailbreak</h1>
       <p class="subtitle">PS4 / Relapse HOST</p>
       <p class="version-info">Offline PlayStation 4 Exploit Host</p>
+      <p id="cache">Checking offline cache...</p>
     </section>
     <section class="status-container">
       <div class="status-label">Exploit status</div>
@@ -325,5 +340,68 @@
     </div>
   </footer>
   <script type="module">import "./jb.js?v=10";</script>
+  <script>
+    (function () {var cacheEl = document.getElementById("cache");
+        function setCache(text, ok) {
+            if (!cacheEl) return;
+            cacheEl.textContent = text;
+            cacheEl.className = ok ? "cacheok" : "";
+        }
+
+        var ac = window.applicationCache;
+
+        if (!ac || !document.documentElement.hasAttribute("manifest")) {
+            setCache("application cache unavailable");
+        } else if (!navigator.onLine) {
+            setCache("offline -- using cached resources", true);
+        } else if (ac.status === ac.IDLE) {
+            setCache("cached -- offline ready", true);
+        } else if (ac.status === ac.UPDATEREADY) {
+            try {
+                ac.swapCache();
+            } catch (e) {}
+            setCache("update downloaded -- offline ready", true);
+        } else {
+            setCache("checking cache...");
+
+            ac.addEventListener("downloading", function () {
+                setCache("caching for offline (first run)...");
+            }, false);
+
+            ac.addEventListener("progress", function (e) {
+                if (e && e.total) {
+                    setCache(
+                        "caching " +
+                        Math.round((e.loaded / e.total) * 100) +
+                        "%"
+                    );
+                }
+            }, false);
+
+            ac.addEventListener("cached", function () {
+                setCache("cached for offline use disconnect to the internet first and rerun this page", true);
+            }, false);
+
+            ac.addEventListener("updateready", function () {
+                try {
+                    ac.swapCache();
+                } catch (e) {}
+                setCache("update downloaded -- offline ready", true);
+            }, false);
+
+            ac.addEventListener("noupdate", function () {
+                setCache("cached -- offline ready", true);
+            }, false);
+
+            ac.addEventListener("error", function () {
+                setCache("cache unavailable");
+            }, false);
+
+            ac.addEventListener("obsolete", function () {
+                setCache("cache obsolete");
+            }, false);
+        }
+    })();
+    </script>
 </body>
 </html>
