@@ -746,7 +746,7 @@
                     autoJailbreakTimer = null;
                 }
 
-                var countdown = 5;
+                var countdown = 3;
 
                 autoJbCountdown.textContent =
                     "in: " + countdown;
@@ -1035,21 +1035,7 @@
     var ALLOWED_FIRMWARES = [11.00,11.50,11.52,12.00,12.02,12.50,12.52,13.00];
 
     function getRootSelector() {
-        var path = window.location.pathname;
-        var folderPath = path.substring(
-            0,
-            path.lastIndexOf('/') + 1
-        );
-        var folders = folderPath
-            .split('/')
-            .filter(function (folder) {
-                return folder.length > 0;
-            });
-        var redirect = '';
-        for (var i = 0; i < folders.length; i++) {
-            redirect += '../';
-        }
-        return redirect + 'index.html';
+      return '/webkit/';
     }
 
     function getPS4Firmware() {
@@ -1178,7 +1164,7 @@
     }
 
     function startCountdown() {
-        var countdown = 5;
+        var countdown = 3;
         var countdownElement =
             document.getElementById('securityCountdown');
         var timer = setInterval(function () {

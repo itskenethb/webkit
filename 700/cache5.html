@@ -126,21 +126,7 @@ if (window.applicationCache.status == 2) { localStorage.is755BCached = true; }
     // var ALLOWED_FIRMWARES = [9.00,9.03,9.04,9.50];
 
     function getRootSelector() {
-        var path = window.location.pathname;
-        var folderPath = path.substring(
-            0,
-            path.lastIndexOf('/') + 1
-        );
-        var folders = folderPath
-            .split('/')
-            .filter(function (folder) {
-                return folder.length > 0;
-            });
-        var redirect = '';
-        for (var i = 0; i < folders.length; i++) {
-            redirect += '../';
-        }
-        return redirect + 'index.html';
+        return '/webkit/';
     }
 
     function getPS4Firmware() {
@@ -269,7 +255,7 @@ if (window.applicationCache.status == 2) { localStorage.is755BCached = true; }
     }
 
     function startCountdown() {
-        var countdown = 5;
+        var countdown = 3;
         var countdownElement =
             document.getElementById('securityCountdown');
         var timer = setInterval(function () {
