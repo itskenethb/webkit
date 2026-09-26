@@ -26,29 +26,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 // We log the line and column numbers as well since some exceptions (like
 // SyntaxError) do not show it in the stack trace.
 
-addEventListener('unhandledrejection', event => {
-    const reason = event.reason;
-    alert(
-        'Kernel Exploit Failed! Shutdown and Try Again.\n\n'
-        + 'Unhandled rejection\n'
-        + `${reason}\n`
-        + `${reason.sourceURL}:${reason.line}:${reason.column}\n`
-        + `${reason.stack}`
-    );
-});
-
-addEventListener('error', event => {
-    const reason = event.error;
-    alert(
-        'Kernel Exploit Failed! Restart and Try Again.\n\n'
-        + 'Unhandled error\n'
-        + `${reason}\n`
-        + `${reason.sourceURL}:${reason.line}:${reason.column}\n`
-        + `${reason.stack}`
-    );
-    return true;
-});
-
 // we have to dynamically import the program if we want to catch its syntax
 // errors
 import('./psfree5.mjs');

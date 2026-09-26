@@ -1400,19 +1400,28 @@
 
     <script>
         function detectPS4Firmware() {
-            var ua = navigator.userAgent;
-            if (/PlayStation 5/i.test(ua)) {
-                return null;
-            }
-            if (!/PlayStation 4/i.test(ua)) {
-                return null;
-            }
-            var match = ua.match(/PlayStation 4[^\d]*(\d+\.\d+)/i);
-            if (!match) {
-                return null;
-            }
-            return parseFloat(match[1]);
+        var ua = navigator.userAgent;
+
+        if (/PlayStation 5/i.test(ua)) {
+            return null;
         }
+
+        if (!/PlayStation 4/i.test(ua)) {
+            return null;
+        }
+
+        var match = ua.match(
+            /PlayStation\s+4[\/ ](\d+)\.(\d+)/i
+        );
+
+        if (!match) {
+            return null;
+        }
+
+        return parseFloat(
+            match[1] + "." + match[2]
+        );
+    }
 
        function getSupportedFirmware(firmware) {
         if (firmware === null) return [];

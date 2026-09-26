@@ -114,6 +114,262 @@ if (window.applicationCache.status == 2) { localStorage.is755BCached = true; }
             }
         }
     </script>
-</body>
+    <script>
+(function () {
+    
+    var FIRMWARE_MODE = 'range';
+    var MIN_FIRMWARE = 7.00;
+    var MAX_FIRMWARE = 8.52;
+    
+    // var FIRMWARE_MODE = 'exact';
+    // var REQUIRED_FIRMWARE = 6.72;
 
+    // var FIRMWARE_MODE = 'list';
+    // var ALLOWED_FIRMWARES = [9.00,9.03,9.04,9.50];
+
+    function getRootSelector() {
+        var path = window.location.pathname;
+        var folderPath = path.substring(
+            0,
+            path.lastIndexOf('/') + 1
+        );
+        var folders = folderPath
+            .split('/')
+            .filter(function (folder) {
+                return folder.length > 0;
+            });
+        var redirect = '';
+        for (var i = 0; i < folders.length; i++) {
+            redirect += '../';
+        }
+        return redirect + 'index.html';
+    }
+
+    function getPS4Firmware() {
+        var ua = navigator.userAgent;
+        if (/PlayStation 5/i.test(ua)) {
+            return null;
+        }
+        if (!/PlayStation 4/i.test(ua)) {
+            return null;
+        }
+        var match = ua.match(
+            /PlayStation\s+4[\/ ](\d+)\.(\d+)/
+        );
+        if (!match) {
+            return null;
+        }
+        return parseFloat(match[1] + "." + match[2]);
+    }
+
+    function isPS4() {
+        var ua = navigator.userAgent;
+        if (/PlayStation 5/i.test(ua)) {
+            return false;
+        }
+        return /PlayStation 4/i.test(ua);
+    }
+
+    function isFirmwareSupported(firmware) {
+        if (firmware === null) {
+            return false;
+        }
+
+        if (FIRMWARE_MODE === 'exact') {
+            return firmware === REQUIRED_FIRMWARE;
+        }
+
+        if (FIRMWARE_MODE === 'range') {
+            return (
+                firmware >= MIN_FIRMWARE &&
+                firmware <= MAX_FIRMWARE
+            );
+        }
+
+        if (FIRMWARE_MODE === 'list') {
+            return ALLOWED_FIRMWARES.indexOf(firmware) !== -1;
+        }
+        return false;
+    }
+
+    function getSupportedFirmwareText() {
+        if (FIRMWARE_MODE === 'exact') {
+            return REQUIRED_FIRMWARE.toFixed(2);
+        }
+
+        if (FIRMWARE_MODE === 'range') {
+            return (
+                MIN_FIRMWARE.toFixed(2) +
+                ' - ' +
+                MAX_FIRMWARE.toFixed(2)
+            );
+        }
+
+        if (FIRMWARE_MODE === 'list') {
+            return ALLOWED_FIRMWARES
+                .map(function (fw) {
+                    return fw.toFixed(2);
+                })
+                .join(', ');
+        }
+        return 'UNKNOWN';
+    }
+
+    function showUnsupportedDevice() {
+        document.documentElement.classList.add(
+            'security-error'
+        );
+        var screen = document.createElement('div');
+        screen.id = 'securityScreen';
+        screen.innerHTML =
+            '<div class="security-message">' +
+                '<div class="security-title">' +
+                    'UNSUPPORTED DEVICE' +
+                '</div>' +
+                '<div class="security-info">' +
+                    'This page is only supported on PlayStation 4.' +
+                '</div>' +
+                '<div class="security-countdown">' +
+                    'Redirecting to firmware selection in ' +
+                    '<span id="securityCountdown">3</span>...' +
+                '</div>' +
+            '</div>';
+        document.body.appendChild(screen);
+        startCountdown();
+    }
+
+    function showUnsupportedFirmware(firmware) {
+        document.documentElement.classList.add(
+            'security-error'
+        );
+        var screen = document.createElement('div');
+        screen.id = 'securityScreen';
+        screen.innerHTML =
+            '<div class="security-message">' +
+                '<div class="security-title">' +
+                    'FIRMWARE NOT SUPPORTED' +
+                '</div>' +
+                '<div class="security-info">' +
+                    'Detected firmware: ' +
+                    (
+                        firmware !== null
+                            ? firmware.toFixed(2)
+                            : 'UNKNOWN'
+                    ) +
+                '</div>' +
+                '<div class="security-info">' +
+                    'Supported firmware: ' +
+                    getSupportedFirmwareText() +
+                '</div>' +
+                '<div class="security-countdown">' +
+                    'Redirecting to firmware selection in ' +
+                    '<span id="securityCountdown">3</span>...' +
+                '</div>' +
+            '</div>';
+        document.body.appendChild(screen);
+        startCountdown();
+    }
+
+    function startCountdown() {
+        var countdown = 5;
+        var countdownElement =
+            document.getElementById('securityCountdown');
+        var timer = setInterval(function () {
+            countdown--;
+            if (countdown <= 0) {
+                clearInterval(timer);
+                window.location.href =
+                    getRootSelector();
+                return;
+            }
+            countdownElement.textContent =
+                countdown;
+        }, 1000);
+    }
+
+    var style = document.createElement('style');
+    style.textContent = `
+        html.security-error,
+        html.security-error body {
+            width: 100% !important;
+            height: 100% !important;
+            min-height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden !important;
+            background: #050706 !important;
+        }
+        
+        html.security-error body > *:not(#securityScreen) {
+            display: none !important;
+        }
+
+        #securityScreen {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #050706;
+            color: #73f5a6;
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                "Liberation Mono",
+                monospace;
+            text-align: center;
+            z-index: 999999;
+        }
+
+        .security-message {
+            width: min(90%, 700px);
+            padding: 30px;
+            border: 1px solid #34443a;
+            background: #080c0a;
+            box-shadow:
+                0 0 30px rgba(115, 245, 166, 0.05);
+        }
+
+        .security-title {
+            color: #73f5a6;
+            font-size: clamp(24px, 5vw, 42px);
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            margin-bottom: 22px;
+        }
+
+        .security-info {
+            color: #b4c1b8;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .security-countdown {
+            color: #73f5a6;
+            font-size: 15px;
+            margin-top: 24px;
+            letter-spacing: 0.04em;
+        }
+
+        #securityCountdown {
+            color: #ffffff;
+            font-size: 20px;
+        }
+    `;
+
+    document.head.appendChild(style);
+    var detectedFirmware = getPS4Firmware();
+
+    if (!isPS4()) {
+        showUnsupportedDevice();
+        return;
+    }
+
+    if (!isFirmwareSupported(detectedFirmware)) {
+        showUnsupportedFirmware(detectedFirmware);
+        return;
+    }
+})();
+</script>
+</body>
 </html>
