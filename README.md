@@ -63,28 +63,94 @@ PlayStation Webkit is a self-contained collection of static PS4 host pages. It p
 | **11.00–13.00** | `slopkit/version-selector.html` | Slopkit UAF + Lapse/Poops | Version selector, then `stable` or `previous` host | No separate utility-payload menu |
 | **13.02–13.52** | `relapse/version-selector.html` | Slopkit Relapse | Version selector, then `variation 1 hen` or `variation 2 goldhen` host | No separate utility-payload menu |
 
-
 The root selector stores the selected firmware locally and routes to the correct branch. Always use the host intended for the exact firmware installed on the console.
 
 ## How the host works
 
+Here’s a shorter version that keeps the firmware choices, cache steps, exploit paths, outputs, and redirect behavior:
+
 ```mermaid
-flowchart LR
-    A[Open index.html] --> B{Choose firmware}
-    B --> C[5.05 host]
-    B --> D[6.72 host]
-    B --> E[7.00-8.52 selector]
-    B --> F[9.00-9.60 selector]
-    B --> G[CSSFontFace selector]
-    E --> H[Select GoldHEN and install AppCache]
-    F --> I[Select GoldHEN and install AppCache]
-    G --> J[Select stable or latest]
-    C --> K[Run exploit flow]
-    D --> K
-    H --> K
-    I --> K
-    J --> K
-    K --> L[GoldHEN and host-specific tools]
+flowchart TB
+    ROOT["Root selector<br/>index.html"] --> DEVICE{"PS4 browser?"}
+    DEVICE -- "No" --> HIDE["[!] Root UI hidden"]
+    DEVICE -- "Yes" --> FW{"Supported firmware?"}
+    FW -- "No" --> ROOT
+    FW -- "Yes" --> ROUTE["Choose host"]
+    ROUTE --> CHECK{"Branch device / firmware check"}
+    CHECK -- "Fail" --> BACK["[!] Redirect to root<br/>/webkit/"]
+    BACK -.-> ROOT
+
+    subgraph HOSTS["Firmware host flows"]
+        direction LR
+
+        subgraph DIRECT["5.05 / 6.72"]
+            direction TB
+            D1["Host + AppCache<br/>Choose GoldHEN"] --> D2["Exploit +<br/>utility payloads"]
+        end
+
+        subgraph PSFREE["7.00-8.52 / 9.00-9.60"]
+            direction TB
+            P1["PSFree selector"] --> P2["GoldHEN .12 or .5"]
+            P2 --> P3["Install matching AppCache"]
+            P3 --> P4["PSFree + Lapse"]
+            P4 --> P5["GoldHEN +<br/>utility payloads"]
+        end
+
+        subgraph CSS["CSSFontFace: 6.00-11.02"]
+            direction TB
+            C1["CSS selector"] --> C2["GoldHEN .12 or .5"]
+            C2 --> C3["Latest or stable host<br/>AppCache manifest"]
+            C3 --> C4["CSSFontFace<br/>Lapse or Poops"]
+            C4 --> C5["GoldHEN"]
+        end
+
+        subgraph SLOP["Slopkit: 11.00-13.00"]
+            direction TB
+            S1["Slopkit selector"] --> S2["GoldHEN .12 or .9"]
+            S2 --> S3["Latest or previous host<br/>AppCache manifest"]
+            S3 --> S4["Slopkit<br/>Lapse or Poops"]
+            S4 --> S5["GoldHEN"]
+        end
+
+        subgraph RELAPSE["Relapse: 13.02-13.52"]
+            direction TB
+            R1["Relapse selector"] --> R2{"Choose enabler"}
+            R2 -- "Variation 1" --> R3["HEN 2.2.0 Beta"]
+            R2 -- "Variation 2" --> R4["GoldHEN"]
+            R3 --> R5["Host + AppCache"]
+            R4 --> R5
+            R5 --> R6{"Firmware allowed?"}
+            R6 -- "Yes" --> R7["Jailbreak<br/>Manual or auto"]
+            R6 -- "No" --> R8["[!] Launch blocked"]
+            R9["?force=1"] -. "Override" .-> R7
+            R7 --> R10["Relapse flow"]
+        end
+    end
+
+    CHECK -- "Pass: 5.05 / 6.72" --> D1
+    CHECK -- "Pass: PSFree" --> P1
+    CHECK -- "Pass: CSS" --> C1
+    CHECK -- "Pass: Slopkit" --> S1
+    CHECK -- "Pass: Relapse" --> R1
+
+    subgraph LEGEND["Legend"]
+        direction LR
+        L1["[!] blocked or redirected"]
+        L2["Solid arrow: normal flow"]
+        L3["Dotted arrow: exception"]
+    end
+
+    classDef root fill:#14251b,stroke:#69d391,color:#effff3,stroke-width:2px;
+    classDef gate fill:#282314,stroke:#d9ad54,color:#fff2cf;
+    classDef host fill:#17231d,stroke:#4c9c69,color:#eaffef;
+    classDef output fill:#143327,stroke:#73dca0,color:#effff3;
+    classDef blocked fill:#2a1717,stroke:#cf6868,color:#ffe8e8;
+
+    class ROOT,ROUTE root;
+    class DEVICE,FW,CHECK,R2,R6 gate;
+    class D1,P1,P2,P3,P4,C1,C2,C3,C4,S1,S2,S3,S4,R1,R3,R4,R5,R7,R9 host;
+    class D2,P5,C5,S5,R10 output;
+    class HIDE,BACK,R8 blocked;
 ```
 
 The project is intentionally static. HTML pages provide the user interface, JavaScript modules run the firmware-specific exploit chain, binary files provide GoldHEN/HEN/kernel-patch/payload assets, and AppCache files keep the selected flow available after the initial cache installation.
