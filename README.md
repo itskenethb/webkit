@@ -66,10 +66,7 @@ PlayStation Webkit is a self-contained collection of static PS4 host pages. It p
 The root selector stores the selected firmware locally and routes to the correct branch. Always use the host intended for the exact firmware installed on the console.
 
 ## How the host works
-
-Here’s a shorter version that keeps the firmware choices, cache steps, exploit paths, outputs, and redirect behavior:
-https://miro.com/app/board/uXjVEeqB4h8=/?moveToWidgets=AQAbx6PIk4GFgIAw0tECWfu7AkTq7AIDkPECuwSI7AVvg8bwBNYCgAF1ZFaP3gP0ngNURSyoAU5GnIIxNw
-https://miro.com/app/board/uXjVEeqB4h8=/?moveToWidgets=AQD5Aaa7iZSBhYCAMJr8KZwBttPHAQHom1uclwKpAwEBAQEBAQEDAQEBAQEBAQEBs94Iz5_4AQEBAQEBAQEBAQEBAQMBAQEBAQEBAQEB8QOhiAPw8QUBAQEBAQEBAgICAQEBAQEBAQEBAdoCuNUD4wWqlwa_vxlq_fEIhb0D8vESuOkCnwWX7gLa8gOcArj5EfDxBJW1AQEBAQEBAQEBAQEBAQEBAwEBAQEBAQEBAQECAQHXnBoBAQEBAQEBAQEBAQEBAQMBAQIBAQEDAgGG5Ab1A5zIBs2qBPanA66OAnXW7AOl3gIBAQEBAQEBAQEBAQEBAQMBAQIBAQEBAgEBAQEBAQEBAdSkCAEBAQEBAQEBAQEBAQEBAQEBAQECAQEBAQIBAQEBAQEBAQGtoQi8BMbkBHayBJj8BtGODYQB9a4E4vsDzbgK9qADrOgCmZUDzwazmQPZ5wKM6QpGx-QM954RowHJqgbrhwLdhRh0wAP0zQPlBG4
+<img width="1536" height="1024" alt="archi" src="https://github.com/user-attachments/assets/159046ab-fe94-428b-b5d0-07c5dfe9cd2c" />
 
 The project is intentionally static. HTML pages provide the user interface, JavaScript modules run the firmware-specific exploit chain, binary files provide GoldHEN/HEN/kernel-patch/payload assets, and AppCache files keep the selected flow available after the initial cache installation.
 
