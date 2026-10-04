@@ -69,6 +69,7 @@ The root selector stores the selected firmware locally and routes to the correct
 
 Here’s a shorter version that keeps the firmware choices, cache steps, exploit paths, outputs, and redirect behavior:
 <img width="918" height="1089" alt="image" src="https://github.com/user-attachments/assets/e800243d-9071-4b68-8a72-e586011d3f23" />
+<img width="733" height="1364" alt="image" src="https://github.com/user-attachments/assets/844680fc-8c25-4edc-a583-141647ace092" />
 <img width="717" height="1392" alt="image" src="https://github.com/user-attachments/assets/eab58273-cf56-461e-84b5-06ce5a498230" />
 <img width="690" height="1449" alt="image" src="https://github.com/user-attachments/assets/34f5acbe-2723-4ccf-9d55-610dfe8ded6e" />
 <img width="694" height="1439" alt="image" src="https://github.com/user-attachments/assets/c2ed1e80-e096-4e0a-b463-42c937ee8ef7" />
