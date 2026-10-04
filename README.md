@@ -70,87 +70,151 @@ The root selector stores the selected firmware locally and routes to the correct
 Here’s a shorter version that keeps the firmware choices, cache steps, exploit paths, outputs, and redirect behavior:
 
 ```mermaid
+%%{init:{
+  "theme":"base",
+  "themeVariables":{
+    "fontFamily":"Arial,sans-serif",
+    "fontSize":"11px",
+    "lineColor":"#64748b",
+    "primaryColor":"#f1f5f9",
+    "primaryTextColor":"#111827",
+    "primaryBorderColor":"#64748b",
+    "secondaryColor":"#f8fafc",
+    "tertiaryColor":"#ffffff"
+  },
+  "flowchart":{
+    "htmlLabels":true,
+    "curve":"linear",
+    "nodeSpacing":12,
+    "rankSpacing":18,
+    "padding":3,
+    "diagramPadding":2
+  }
+}}%%
+
 flowchart TB
-    ROOT["Root selector<br/>index.html"] --> DEVICE{"PS4 browser?"}
-    DEVICE -- "No" --> HIDE["[!] Root UI hidden"]
-    DEVICE -- "Yes" --> FW{"Supported firmware?"}
-    FW -- "No" --> ROOT
-    FW -- "Yes" --> ROUTE["Choose host"]
-    ROUTE --> CHECK{"Branch device / firmware check"}
-    CHECK -- "Fail" --> BACK["[!] Redirect to root<br/>/webkit/"]
+
+    %% ================= ROOT PATH =================
+
+    ROOT(["<b>ROOT</b><br>index.html"])
+    DEVICE{"PS4 browser?"}
+    FW{"Supported firmware?"}
+    ROUTE["Choose host"]
+    CHECK{"Branch check"}
+
+    ROOT --> DEVICE
+    DEVICE -- No --> HIDE["[!] UI hidden"]
+    DEVICE -- Yes --> FW
+    FW -- No --> ROOT
+    FW -- Yes --> ROUTE
+    ROUTE --> CHECK
+
+    CHECK -- Fail --> BACK["[!] WebKit fallback"]
     BACK -.-> ROOT
 
-    subgraph HOSTS["Firmware host flows"]
+
+    %% ================= HOST FLOWS =================
+
+    subgraph HOSTS["HOST FLOWS"]
         direction LR
 
         subgraph DIRECT["5.05 / 6.72"]
             direction TB
-            D1["Host + AppCache<br/>Choose GoldHEN"] --> D2["Exploit +<br/>utility payloads"]
+            D["Host + AppCache<br>Choose GoldHEN"]
+            D2["Exploit + Payloads"]
+            D --> D2
         end
 
-        subgraph PSFREE["7.00-8.52 / 9.00-9.60"]
+        subgraph PSFREE["7.00–8.52<br>9.00–9.60"]
             direction TB
-            P1["PSFree selector"] --> P2["GoldHEN .12 or .5"]
-            P2 --> P3["Install matching AppCache"]
-            P3 --> P4["PSFree + Lapse"]
-            P4 --> P5["GoldHEN +<br/>utility payloads"]
+            P["PSFree"]
+            P2["GoldHEN 2.12 / 2.5"]
+            P3["AppCache"]
+            P4["Lapse"]
+            P5["GoldHEN + Payloads"]
+
+            P --> P2 --> P3 --> P4 --> P5
         end
 
-        subgraph CSS["CSSFontFace: 6.00-11.02"]
+        subgraph CSS["CSSFontFace<br>6.00–11.02"]
             direction TB
-            C1["CSS selector"] --> C2["GoldHEN .12 or .5"]
-            C2 --> C3["Latest or stable host<br/>AppCache manifest"]
-            C3 --> C4["CSSFontFace<br/>Lapse or Poops"]
-            C4 --> C5["GoldHEN"]
+            C["CSSFontFace Selector"]
+            C2["GoldHEN 2.12 / 2.5"]
+            C3["Latest / Stable AppCache"]
+            C4["Lapse / Poops"]
+            C5["GoldHEN"]
+
+            C --> C2 --> C3 --> C4 --> C5
         end
 
-        subgraph SLOP["Slopkit: 11.00-13.00"]
+        subgraph SLOP["Slopkit<br>11.00–13.00"]
             direction TB
-            S1["Slopkit selector"] --> S2["GoldHEN .12 or .9"]
-            S2 --> S3["Latest or previous host<br/>AppCache manifest"]
-            S3 --> S4["Slopkit<br/>Lapse or Poops"]
-            S4 --> S5["GoldHEN"]
+            S["Slopkit Selector"]
+            S2["GoldHEN 2.12 / 2.9"]
+            S3["Latest / Previous AppCache"]
+            S4["Lapse / Poops"]
+            S5["GoldHEN"]
+
+            S --> S2 --> S3 --> S4 --> S5
         end
 
-        subgraph RELAPSE["Relapse: 13.02-13.52"]
+        subgraph RELAPSE["Relapse<br>13.02–13.52"]
             direction TB
-            R1["Relapse selector"] --> R2{"Choose enabler"}
-            R2 -- "Variation 1" --> R3["HEN 2.2.0 Beta"]
-            R2 -- "Variation 2" --> R4["GoldHEN"]
-            R3 --> R5["Host + AppCache"]
-            R4 --> R5
-            R5 --> R6{"Firmware allowed?"}
-            R6 -- "Yes" --> R7["Jailbreak<br/>Manual or auto"]
-            R6 -- "No" --> R8["[!] Launch blocked"]
-            R9["?force=1"] -. "Override" .-> R7
-            R7 --> R10["Relapse flow"]
+
+            R["Relapse"]
+            RV{"Enabler?"}
+            V1["Version 1: HEN 2.2.0"]
+            V2["Version 2: GoldHEN"]
+            AC["Host + AppCache"]
+            ALLOW{"Allowed?"}
+            JB["Jailbreak<br>Manual / Automatic"]
+            BLOCK["[!] Blocked"]
+            FORCE["?force=1"]
+            REL["Relapse"]
+
+            R --> RV
+            RV --> V1
+            RV --> V2
+
+            V1 --> AC
+            V2 --> AC
+
+            AC --> ALLOW
+
+            ALLOW -- Yes --> JB
+            ALLOW -- No --> BLOCK
+
+            FORCE -.-> JB
+            JB --> REL
         end
     end
 
-    CHECK -- "Pass: 5.05 / 6.72" --> D1
-    CHECK -- "Pass: PSFree" --> P1
-    CHECK -- "Pass: CSS" --> C1
-    CHECK -- "Pass: Slopkit" --> S1
-    CHECK -- "Pass: Relapse" --> R1
 
-    subgraph LEGEND["Legend"]
-        direction LR
-        L1["[!] blocked or redirected"]
-        L2["Solid arrow: normal flow"]
-        L3["Dotted arrow: exception"]
-    end
+    %% ================= ROUTING =================
 
-    classDef root fill:#14251b,stroke:#69d391,color:#effff3,stroke-width:2px;
-    classDef gate fill:#282314,stroke:#d9ad54,color:#fff2cf;
-    classDef host fill:#17231d,stroke:#4c9c69,color:#eaffef;
-    classDef output fill:#143327,stroke:#73dca0,color:#effff3;
-    classDef blocked fill:#2a1717,stroke:#cf6868,color:#ffe8e8;
+    CHECK -- "5.05 / 6.72" --> D
+    CHECK -- "PSFree" --> P
+    CHECK -- "CSSFontFace" --> C
+    CHECK -- "Slopkit" --> S
+    CHECK -- "Relapse" --> R
 
-    class ROOT,ROUTE root;
-    class DEVICE,FW,CHECK,R2,R6 gate;
-    class D1,P1,P2,P3,P4,C1,C2,C3,C4,S1,S2,S3,S4,R1,R3,R4,R5,R7,R9 host;
-    class D2,P5,C5,S5,R10 output;
-    class HIDE,BACK,R8 blocked;
+
+    %% ================= STYLES =================
+
+    classDef root fill:#e0f2e9,stroke:#2f855a,color:#111827,stroke-width:2px;
+    classDef gate fill:#fef3c7,stroke:#b7791f,color:#111827,stroke-width:1.5px;
+    classDef flow fill:#f1f5f9,stroke:#64748b,color:#111827;
+    classDef output fill:#dcefe4,stroke:#2f855a,color:#111827;
+    classDef blocked fill:#fee2e2,stroke:#b91c1c,color:#111827;
+
+    class ROOT root;
+    class DEVICE,FW,CHECK,RV,ALLOW gate;
+
+    class ROUTE,D,BACK,P,P2,P3,P4,C,C2,C3,S,S2,S3,S4,R,V1,V2,AC,JB,FORCE flow;
+
+    class D2,P5,C5,S5,REL output;
+
+    class HIDE,BLOCK blocked;
 ```
 
 The project is intentionally static. HTML pages provide the user interface, JavaScript modules run the firmware-specific exploit chain, binary files provide GoldHEN/HEN/kernel-patch/payload assets, and AppCache files keep the selected flow available after the initial cache installation.
