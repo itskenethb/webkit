@@ -68,14 +68,8 @@ The root selector stores the selected firmware locally and routes to the correct
 ## How the host works
 
 Here’s a shorter version that keeps the firmware choices, cache steps, exploit paths, outputs, and redirect behavior:
-<img width="918" height="1089" alt="image" src="https://github.com/user-attachments/assets/e800243d-9071-4b68-8a72-e586011d3f23" />
-<img width="733" height="1364" alt="image" src="https://github.com/user-attachments/assets/844680fc-8c25-4edc-a583-141647ace092" />
-<img width="717" height="1392" alt="image" src="https://github.com/user-attachments/assets/eab58273-cf56-461e-84b5-06ce5a498230" />
-<img width="690" height="1449" alt="image" src="https://github.com/user-attachments/assets/34f5acbe-2723-4ccf-9d55-610dfe8ded6e" />
-<img width="694" height="1439" alt="image" src="https://github.com/user-attachments/assets/c2ed1e80-e096-4e0a-b463-42c937ee8ef7" />
-<img width="678" height="1474" alt="image" src="https://github.com/user-attachments/assets/7fa6dd08-ce20-42d7-9cdb-613e7ed3bee5" />
-<img width="681" height="1467" alt="image" src="https://github.com/user-attachments/assets/526537e7-960e-4f9a-9a98-59a3637fd55c" />
-<img width="709" height="1410" alt="image" src="https://github.com/user-attachments/assets/d0bb88cd-0252-4905-b659-468cff02bd5d" />
+https://miro.com/app/board/uXjVEeqB4h8=/?moveToWidgets=AQAbx6PIk4GFgIAw0tECWfu7AkTq7AIDkPECuwSI7AVvg8bwBNYCgAF1ZFaP3gP0ngNURSyoAU5GnIIxNw
+https://miro.com/app/board/uXjVEeqB4h8=/?moveToWidgets=AQD5Aaa7iZSBhYCAMJr8KZwBttPHAQHom1uclwKpAwEBAQEBAQEDAQEBAQEBAQEBs94Iz5_4AQEBAQEBAQEBAQEBAQMBAQEBAQEBAQEB8QOhiAPw8QUBAQEBAQEBAgICAQEBAQEBAQEBAdoCuNUD4wWqlwa_vxlq_fEIhb0D8vESuOkCnwWX7gLa8gOcArj5EfDxBJW1AQEBAQEBAQEBAQEBAQEBAwEBAQEBAQEBAQECAQHXnBoBAQEBAQEBAQEBAQEBAQMBAQIBAQEDAgGG5Ab1A5zIBs2qBPanA66OAnXW7AOl3gIBAQEBAQEBAQEBAQEBAQMBAQIBAQEBAgEBAQEBAQEBAdSkCAEBAQEBAQEBAQEBAQEBAQEBAQECAQEBAQIBAQEBAQEBAQGtoQi8BMbkBHayBJj8BtGODYQB9a4E4vsDzbgK9qADrOgCmZUDzwazmQPZ5wKM6QpGx-QM954RowHJqgbrhwLdhRh0wAP0zQPlBG4
 
 The project is intentionally static. HTML pages provide the user interface, JavaScript modules run the firmware-specific exploit chain, binary files provide GoldHEN/HEN/kernel-patch/payload assets, and AppCache files keep the selected flow available after the initial cache installation.
 
