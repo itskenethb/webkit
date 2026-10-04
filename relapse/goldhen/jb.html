@@ -197,7 +197,7 @@
 
     .status-line::before {
       color: var(--green);
-      content: "[READY] ";
+      content: " Status : READY ";
     }
 
     #spin {
@@ -221,22 +221,24 @@
     }
 
     body.fail #msg::after {
-      content: "Restart your console";
+      content: " or Restart your console";
     }
 
     body.done .status-line::before {
       color: var(--green);
-      content: "[DONE] ";
+      content: " Status : DONE ";
     }
 
     body.fail .status-line::before {
       color: var(--red);
-      content: "[FAIL] ";
+      content: " Status : FAIL ";
     }
 
     body.done #msg {
       border-color: var(--green);
-      color: var(--green);
+      color: #7fd0a0;
+      font-weight: 700;
+      letter-spacing: 1px;
     }
 
     body.fail #msg {
@@ -325,9 +327,8 @@
       <div class="status-label">Exploit status</div>
       <div id="msg"><span id="spin"></span></div>
       <div id="state"></div>
+      <div class="status-line"></div>
       <pre id="out"></pre>
-      <div class="status-line">Initializing jailbreak...</div>
-    </section>
   </main>
   <footer class="credits">
     <div class="credits-line">
@@ -338,7 +339,7 @@
       >itskenethb</a>
     </div>
   </footer>
-  <script type="module">import "./jb.js?v=10";</script>
+  <script type="module">import "./jb.js?v=19";</script>
   <script>
     (function () {var cacheEl = document.getElementById("cache");
         function setCache(text, ok) {
