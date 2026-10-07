@@ -66,7 +66,14 @@ PlayStation Webkit is a self-contained collection of static PS4 host pages. It p
 The root selector stores the selected firmware locally and routes to the correct branch. Always use the host intended for the exact firmware installed on the console.
 
 ## How the host works
-<img width="1536" height="1024" alt="archi" src="https://github.com/user-attachments/assets/159046ab-fe94-428b-b5d0-07c5dfe9cd2c" />
+<img width="650" height="474" alt="image" src="https://github.com/user-attachments/assets/e68fbb69-3520-42a6-8a0a-4af35e1d0279" />
+<img width="1275" height="157" alt="image" src="https://github.com/user-attachments/assets/d34d5e08-df34-4625-82fb-1ec29b0edc9e" />
+<img width="1365" height="158" alt="image" src="https://github.com/user-attachments/assets/d0887d06-7ba5-4e9f-89ce-399380b58c20" />
+<img width="1356" height="144" alt="image" src="https://github.com/user-attachments/assets/ee33c8ab-7bbd-4257-9c2a-801f799a6fb3" />
+<img width="1331" height="137" alt="image" src="https://github.com/user-attachments/assets/b12654f1-b8fe-4a50-83e5-4b52d3b60bee" />
+<img width="1221" height="272" alt="image" src="https://github.com/user-attachments/assets/89ebd7d7-d237-49ad-8d17-9ab406c2873c" />
+<img width="1298" height="178" alt="image" src="https://github.com/user-attachments/assets/75602213-0431-4348-9e98-f766564fb94b" />
+<img width="1267" height="292" alt="image" src="https://github.com/user-attachments/assets/4818c095-e50c-4f71-bab1-a68a82f20b3d" />
 
 The project is intentionally static. HTML pages provide the user interface, JavaScript modules run the firmware-specific exploit chain, binary files provide GoldHEN/HEN/kernel-patch/payload assets, and AppCache files keep the selected flow available after the initial cache installation.
 
