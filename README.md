@@ -66,14 +66,17 @@ PlayStation Webkit is a self-contained collection of static PS4 host pages. It p
 The root selector stores the selected firmware locally and routes to the correct branch. Always use the host intended for the exact firmware installed on the console.
 
 ## How the host works
-<img width="650" height="474" alt="image" src="https://github.com/user-attachments/assets/e68fbb69-3520-42a6-8a0a-4af35e1d0279" />
-<img width="1275" height="157" alt="image" src="https://github.com/user-attachments/assets/d34d5e08-df34-4625-82fb-1ec29b0edc9e" />
-<img width="1365" height="158" alt="image" src="https://github.com/user-attachments/assets/d0887d06-7ba5-4e9f-89ce-399380b58c20" />
-<img width="1356" height="144" alt="image" src="https://github.com/user-attachments/assets/ee33c8ab-7bbd-4257-9c2a-801f799a6fb3" />
-<img width="1331" height="137" alt="image" src="https://github.com/user-attachments/assets/b12654f1-b8fe-4a50-83e5-4b52d3b60bee" />
-<img width="1221" height="272" alt="image" src="https://github.com/user-attachments/assets/89ebd7d7-d237-49ad-8d17-9ab406c2873c" />
-<img width="1298" height="178" alt="image" src="https://github.com/user-attachments/assets/75602213-0431-4348-9e98-f766564fb94b" />
-<img width="1267" height="292" alt="image" src="https://github.com/user-attachments/assets/4818c095-e50c-4f71-bab1-a68a82f20b3d" />
+<img width="676" height="483" alt="image" src="https://github.com/user-attachments/assets/1bc0013a-5dce-4a51-863d-4f0a446f0ba7" />
+<img width="1366" height="220" alt="image" src="https://github.com/user-attachments/assets/3063f1fb-682f-4808-94e8-456558f793b4" />
+<img width="1147" height="249" alt="image" src="https://github.com/user-attachments/assets/1017a53f-b9fa-4db0-8765-a8e14f26f89a" />
+<img width="760" height="224" alt="image" src="https://github.com/user-attachments/assets/553a6fc5-41eb-4b6e-854d-4d4bf6c7a648" />
+<img width="1123" height="258" alt="image" src="https://github.com/user-attachments/assets/85f80daf-aa0b-4ef8-8e3d-b70d6bb349b2" />
+<img width="1018" height="239" alt="image" src="https://github.com/user-attachments/assets/9c1a4681-b512-474a-8871-38993088136f" />
+<img width="1135" height="261" alt="image" src="https://github.com/user-attachments/assets/63bfba15-3eab-4a76-86f7-68909903a248" />
+<img width="1315" height="238" alt="image" src="https://github.com/user-attachments/assets/15a6eb4f-2fb7-41cc-802f-48f7a4315ece" />
+<img width="493" height="179" alt="image" src="https://github.com/user-attachments/assets/95795994-91f7-401e-9fee-0cedc51892f2" />
+<img width="1281" height="251" alt="image" src="https://github.com/user-attachments/assets/881322d1-d549-44a6-a10f-a80f0461a70e" />
+<img width="967" height="226" alt="image" src="https://github.com/user-attachments/assets/a0d5e33f-727f-4193-b873-a20054871813" />
 
 The project is intentionally static. HTML pages provide the user interface, JavaScript modules run the firmware-specific exploit chain, binary files provide GoldHEN/HEN/kernel-patch/payload assets, and AppCache files keep the selected flow available after the initial cache installation.
 
