@@ -66,17 +66,11 @@ PlayStation Webkit is a self-contained collection of static PS4 host pages. It p
 The root selector stores the selected firmware locally and routes to the correct branch. Always use the host intended for the exact firmware installed on the console.
 
 ## How the host works
-<img width="676" height="483" alt="image" src="https://github.com/user-attachments/assets/1bc0013a-5dce-4a51-863d-4f0a446f0ba7" />
-<img width="1366" height="220" alt="image" src="https://github.com/user-attachments/assets/3063f1fb-682f-4808-94e8-456558f793b4" />
-<img width="1147" height="249" alt="image" src="https://github.com/user-attachments/assets/1017a53f-b9fa-4db0-8765-a8e14f26f89a" />
-<img width="760" height="224" alt="image" src="https://github.com/user-attachments/assets/553a6fc5-41eb-4b6e-854d-4d4bf6c7a648" />
-<img width="1123" height="258" alt="image" src="https://github.com/user-attachments/assets/85f80daf-aa0b-4ef8-8e3d-b70d6bb349b2" />
-<img width="1018" height="239" alt="image" src="https://github.com/user-attachments/assets/9c1a4681-b512-474a-8871-38993088136f" />
-<img width="1135" height="261" alt="image" src="https://github.com/user-attachments/assets/63bfba15-3eab-4a76-86f7-68909903a248" />
-<img width="1315" height="238" alt="image" src="https://github.com/user-attachments/assets/15a6eb4f-2fb7-41cc-802f-48f7a4315ece" />
-<img width="493" height="179" alt="image" src="https://github.com/user-attachments/assets/95795994-91f7-401e-9fee-0cedc51892f2" />
-<img width="1281" height="251" alt="image" src="https://github.com/user-attachments/assets/881322d1-d549-44a6-a10f-a80f0461a70e" />
-<img width="967" height="226" alt="image" src="https://github.com/user-attachments/assets/a0d5e33f-727f-4193-b873-a20054871813" />
+https://github.com/itskenethb/webkit/blob/main/assets/Architechture-1.png
+https://github.com/itskenethb/webkit/blob/main/assets/Architechture-2.png
+https://github.com/itskenethb/webkit/blob/main/assets/Architechture-3.png
+https://github.com/itskenethb/webkit/blob/main/assets/Architechture-4.png
+https://github.com/itskenethb/webkit/blob/main/assets/Architechture-5.png
 
 The project is intentionally static. HTML pages provide the user interface, JavaScript modules run the firmware-specific exploit chain, binary files provide GoldHEN/HEN/kernel-patch/payload assets, and AppCache files keep the selected flow available after the initial cache installation.
 
