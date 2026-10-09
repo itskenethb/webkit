@@ -66,11 +66,11 @@ PlayStation Webkit is a self-contained collection of static PS4 host pages. It p
 The root selector stores the selected firmware locally and routes to the correct branch. Always use the host intended for the exact firmware installed on the console.
 
 ## How the host works
-https://raw.githubusercontent.com/itskenethb/webkit/refs/heads/main/assets/Architechture-1.png
-https://raw.githubusercontent.com/itskenethb/webkit/refs/heads/main/assets/Architechture-2.png
-https://raw.githubusercontent.com/itskenethb/webkit/refs/heads/main/assets/Architechture-3.png
-https://raw.githubusercontent.com/itskenethb/webkit/refs/heads/main/assets/Architechture-4.png
-https://raw.githubusercontent.com/itskenethb/webkit/refs/heads/main/assets/Architechture-5.png
+![A1](https://raw.githubusercontent.com/itskenethb/webkit/refs/heads/main/assets/Architechture-1.png)
+![A2](https://raw.githubusercontent.com/itskenethb/webkit/refs/heads/main/assets/Architechture-2.png)
+![A3](https://raw.githubusercontent.com/itskenethb/webkit/refs/heads/main/assets/Architechture-3.png)
+![A4](https://raw.githubusercontent.com/itskenethb/webkit/refs/heads/main/assets/Architechture-4.png)
+![A5](https://raw.githubusercontent.com/itskenethb/webkit/refs/heads/main/assets/Architechture-5.png)
 
 The project is intentionally static. HTML pages provide the user interface, JavaScript modules run the firmware-specific exploit chain, binary files provide GoldHEN/HEN/kernel-patch/payload assets, and AppCache files keep the selected flow available after the initial cache installation.
 
